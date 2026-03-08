@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinGen Quiz - Financial Literacy Challenge</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="background-animation" id="backgroundAnimation"></div>
+  
+  <div class="game-container">
+    <div class="header">
+      <div class="logo">
+        <div class="logo-icon"><i class="fas fa-brain"></i></div>
+        <div class="logo-text">FinGen Quiz</div>
+      </div>
+      <div class="subtitle">Test your financial knowledge and level up your money skills!</div>
+      
+      <div class="stats-bar">
+        <div class="stat">
+          <div class="stat-label"><i class="fas fa-question-circle"></i> Questions</div>
+          <div class="stat-value">10</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label"><i class="fas fa-trophy"></i> Levels</div>
+          <div class="stat-value">3</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label"><i class="fas fa-coins"></i> Rewards</div>
+          <div class="stat-value">Unlock</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="quiz-box">
+      <form id="quiz-form">
+        <!-- Question 1 -->
+        <div class="question-card">
+          <div class="question-header">
+            <span class="question-number">1</span>
+            <h3 class="question-text">What is the best reason to make a monthly budget?</h3>
+          </div>
+          <div class="options-container">
+            <label class="option">
+              <input type="radio" name="q1" value="0">
+              <span class="option-icon"><i class="fas fa-users"></i></span>
+              <span class="option-text">To show off to friends</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q1" value="0">
+              <span class="option-icon"><i class="fas fa-file-invoice-dollar"></i></span>
+              <span class="option-text">To avoid paying taxes</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q1" value="1">
+              <span class="option-icon"><i class="fas fa-chart-line"></i></span>
+              <span class="option-text">To track income and expenses</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q1" value="0">
+              <span class="option-icon"><i class="fas fa-user-check"></i></span>
+              <span class="option-text">To impress your parents</span>
+            </label>
+          </div>
+        </div>
+        
+        <!-- Question 2 -->
+        <div class="question-card">
+          <div class="question-header">
+            <span class="question-number">2</span>
+            <h3 class="question-text">You receive ₹10,000. What's the smartest action?</h3>
+          </div>
+          <div class="options-container">
+            <label class="option">
+              <input type="radio" name="q2" value="0">
+              <span class="option-icon"><i class="fas fa-shopping-cart"></i></span>
+              <span class="option-text">Spend all on wishlist items</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q2" value="0">
+              <span class="option-icon"><i class="fas fa-piggy-bank"></i></span>
+              <span class="option-text">Save only if something's leftover</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q2" value="1">
+              <span class="option-icon"><i class="fas fa-percentage"></i></span>
+              <span class="option-text">Save a fixed percentage first, then spend</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q2" value="0">
+              <span class="option-icon"><i class="fas fa-bitcoin"></i></span>
+              <span class="option-text">Convert it all to crypto</span>
+            </label>
+          </div>
+        </div>
+        
+        <!-- Question 3 -->
+        <div class="question-card">
+          <div class="question-header">
+            <span class="question-number">3</span>
+            <h3 class="question-text">What is an EMI?</h3>
+          </div>
+          <div class="options-container">
+            <label class="option">
+              <input type="radio" name="q3" value="1">
+              <span class="option-icon"><i class="fas fa-calendar-alt"></i></span>
+              <span class="option-text">Equated Monthly Installment</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q3" value="0">
+              <span class="option-icon"><i class="fas fa-money-bill-wave"></i></span>
+              <span class="option-text">Extra Monthly Income</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q3" value="0">
+              <span class="option-icon"><i class="fas fa-hospital"></i></span>
+              <span class="option-text">Emergency Medical Insurance</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q3" value="0">
+              <span class="option-icon"><i class="fas fa-home"></i></span>
+              <span class="option-text">Estimated Mortgage Increase</span>
+            </label>
+          </div>
+        </div>
+        
+        <!-- Question 4 -->
+        <div class="question-card">
+          <div class="question-header">
+            <span class="question-number">4</span>
+            <h3 class="question-text">What happens if you default on a loan?</h3>
+          </div>
+          <div class="options-container">
+            <label class="option">
+              <input type="radio" name="q4" value="0">
+              <span class="option-icon"><i class="fas fa-university"></i></span>
+              <span class="option-text">Bank gives you more money</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q4" value="1">
+              <span class="option-icon"><i class="fas fa-chart-bar"></i></span>
+              <span class="option-text">Your credit score drops</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q4" value="0">
+              <span class="option-icon"><i class="fas fa-redo"></i></span>
+              <span class="option-text">You get cashback</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q4" value="0">
+              <span class="option-icon"><i class="fas fa-meh"></i></span>
+              <span class="option-text">Nothing happens</span>
+            </label>
+          </div>
+        </div>
+        
+        <!-- Question 5 -->
+        <div class="question-card">
+          <div class="question-header">
+            <span class="question-number">5</span>
+            <h3 class="question-text">What does '80C' refer to in Indian Tax system?</h3>
+          </div>
+          <div class="options-container">
+            <label class="option">
+              <input type="radio" name="q5" value="0">
+              <span class="option-icon"><i class="fas fa-id-card"></i></span>
+              <span class="option-text">PAN card rule</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q5" value="1">
+              <span class="option-icon"><i class="fas fa-file-contract"></i></span>
+              <span class="option-text">A section for tax-saving investments</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q5" value="0">
+              <span class="option-icon"><i class="fas fa-receipt"></i></span>
+              <span class="option-text">GST refund</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q5" value="0">
+              <span class="option-icon"><i class="fas fa-university"></i></span>
+              <span class="option-text">Bank limit on savings</span>
+            </label>
+          </div>
+        </div>
+        
+        <!-- Question 6 -->
+        <div class="question-card">
+          <div class="question-header">
+            <span class="question-number">6</span>
+            <h3 class="question-text">Which investment is considered lowest risk?</h3>
+          </div>
+          <div class="options-container">
+            <label class="option">
+              <input type="radio" name="q6" value="0">
+              <span class="option-icon"><i class="fas fa-chart-line"></i></span>
+              <span class="option-text">Stock Market</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q6" value="1">
+              <span class="option-icon"><i class="fas fa-lock"></i></span>
+              <span class="option-text">Fixed Deposit</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q6" value="0">
+              <span class="option-icon"><i class="fas fa-coins"></i></span>
+              <span class="option-text">Crypto</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q6" value="0">
+              <span class="option-icon"><i class="fas fa-chart-pie"></i></span>
+              <span class="option-text">Mutual Funds</span>
+            </label>
+          </div>
+        </div>
+        
+        <!-- Question 7 -->
+        <div class="question-card">
+          <div class="question-header">
+            <span class="question-number">7</span>
+            <h3 class="question-text">What's the purpose of a Credit Score?</h3>
+          </div>
+          <div class="options-container">
+            <label class="option">
+              <input type="radio" name="q7" value="0">
+              <span class="option-icon"><i class="fas fa-crown"></i></span>
+              <span class="option-text">To track how rich you are</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q7" value="1">
+              <span class="option-icon"><i class="fas fa-shield-alt"></i></span>
+              <span class="option-text">To measure how reliably you repay loans</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q7" value="0">
+              <span class="option-icon"><i class="fas fa-calculator"></i></span>
+              <span class="option-text">To calculate your tax</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q7" value="0">
+              <span class="option-icon"><i class="fas fa-random"></i></span>
+              <span class="option-text">Just a random number</span>
+            </label>
+          </div>
+        </div>
+        
+        <!-- Question 8 -->
+        <div class="question-card">
+          <div class="question-header">
+            <span class="question-number">8</span>
+            <h3 class="question-text">Which of these is a 'Need' not a 'Want'?</h3>
+          </div>
+          <div class="options-container">
+            <label class="option">
+              <input type="radio" name="q8" value="0">
+              <span class="option-icon"><i class="fas fa-shoe-prints"></i></span>
+              <span class="option-text">Fancy shoes</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q8" value="0">
+              <span class="option-icon"><i class="fas fa-tv"></i></span>
+              <span class="option-text">Netflix Subscription</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q8" value="1">
+              <span class="option-icon"><i class="fas fa-shopping-basket"></i></span>
+              <span class="option-text">Monthly groceries</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q8" value="0">
+              <span class="option-icon"><i class="fas fa-glass-cheers"></i></span>
+              <span class="option-text">Weekend party</span>
+            </label>
+          </div>
+        </div>
+        
+        <!-- Question 9 -->
+        <div class="question-card">
+          <div class="question-header">
+            <span class="question-number">9</span>
+            <h3 class="question-text">What's the biggest advantage of SIP?</h3>
+          </div>
+          <div class="options-container">
+            <label class="option">
+              <input type="radio" name="q9" value="0">
+              <span class="option-icon"><i class="fas fa-file-invoice"></i></span>
+              <span class="option-text">Tax refund</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q9" value="1">
+              <span class="option-icon"><i class="fas fa-balance-scale"></i></span>
+              <span class="option-text">Rupee cost averaging and disciplined investing</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q9" value="0">
+              <span class="option-icon"><i class="fas fa-gem"></i></span>
+              <span class="option-text">Buying gold every month</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q9" value="0">
+              <span class="option-icon"><i class="fas fa-fire"></i></span>
+              <span class="option-text">It's trendy</span>
+            </label>
+          </div>
+        </div>
+        
+        <!-- Question 10 -->
+        <div class="question-card">
+          <div class="question-header">
+            <span class="question-number">10</span>
+            <h3 class="question-text">What is the most important step before investing in stocks?</h3>
+          </div>
+          <div class="options-container">
+            <label class="option">
+              <input type="radio" name="q10" value="1">
+              <span class="option-icon"><i class="fas fa-search"></i></span>
+              <span class="option-text">Understanding the company's fundamentals</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q10" value="0">
+              <span class="option-icon"><i class="fas fa-mobile-alt"></i></span>
+              <span class="option-text">Watching Instagram reels</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q10" value="0">
+              <span class="option-icon"><i class="fas fa-user-friends"></i></span>
+              <span class="option-text">Waiting for friends to do it</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="q10" value="0">
+              <span class="option-icon"><i class="fas fa-robot"></i></span>
+              <span class="option-text">Asking ChatGPT</span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="submit-container">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-paper-plane"></i> Submit Quiz & See Results
+          </button>
+          <div class="quiz-progress">
+            <div class="progress-label">
+              <span>Quiz Progress</span>
+              <span id="answered-count">0/10</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="quiz-progress-fill"></div>
+            </div>
+          </div>
+        </div>
+      </form>
+      
+      <div id="result" class="result-container hidden">
+        <div class="result-card">
+          <div class="result-header">
+            <div class="result-icon" id="result-icon">
+              <i class="fas fa-trophy"></i>
+            </div>
+            <h2 class="result-title">Quiz Results</h2>
+          </div>
+          
+          <div class="score-display">
+            <div class="score-circle">
+              <div class="score-value" id="score-value">0</div>
+              <div class="score-total">/10</div>
+            </div>
+            <div class="score-label">Your Score</div>
+          </div>
+          
+          <div class="level-badge" id="level-badge">
+            <div class="badge-icon"><i class="fas fa-seedling"></i></div>
+            <div class="badge-text">🔰 Beginner</div>
+          </div>
+          
+          <div class="result-message" id="result-message">
+            Great start! Keep learning to level up your financial knowledge.
+          </div>
+          
+          <div class="action-buttons">
+            <button class="btn btn-secondary" onclick="resetQuiz()">
+              <i class="fas fa-redo"></i> Try Again
+            </button>
+            <button class="btn btn-success" onclick="shareResults()">
+              <i class="fas fa-share"></i> Share Score
+            </button>
+          </div>
+          
+          <div class="improvement-tips">
+            <h3><i class="fas fa-lightbulb"></i> Tips to Improve</h3>
+            <div class="tips-list">
+              <div class="tip"><i class="fas fa-book"></i> Read financial blogs daily</div>
+              <div class="tip"><i class="fas fa-podcast"></i> Listen to money podcasts</div>
+              <div class="tip"><i class="fas fa-chart-line"></i> Track your expenses for 30 days</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

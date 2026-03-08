@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinGen – Gamify Your Finances</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Parallax Background -->
+  <div class="parallax-bg" id="parallaxBg">
+    <div class="bg-layer" id="bgLayer"></div>
+  </div>
+  
+  <!-- Grid Overlay -->
+  <div class="grid-overlay"></div>
+  
+  <!-- Animated Coins -->
+  <div class="floating-coins" id="floatingCoins"></div>
+  
+  <!-- Financial Chart SVG -->
+  <div class="chart-animation">
+    <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <path class="chart-line" d="M0,50 C10,40 20,60 30,50 C40,40 50,60 60,50 C70,40 80,60 90,50 C100,40 100,60 100,50" 
+            stroke="rgba(138, 43, 226, 0.3)" fill="none" stroke-width="0.5"/>
+      <path class="chart-line" d="M0,60 C10,70 20,50 30,60 C40,70 50,50 60,60 C70,70 80,50 90,60 C100,70 100,50 100,60" 
+            stroke="rgba(0, 212, 255, 0.3)" fill="none" stroke-width="0.5"/>
+    </svg>
+  </div>
+  
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="logo-container">
+        <div class="logo-circle">
+          <i class="fas fa-coins"></i>
+        </div>
+        <h1 class="logo-title">FinGen</h1>
+        <p class="tagline">Gamifying your path to financial freedom with interactive challenges and real-world lessons</p>
+      </div>
+      
+      <div class="cta">
+        <button class="cta-button" onclick="location.href='frontend/QuizPage/index.html'">
+          <i class="fas fa-chart-line"></i>
+          Take Financial Aptitude Quiz
+        </button>
+        <button class="cta-button secondary" onclick="document.getElementById('games').scrollIntoView({behavior: 'smooth'})">
+          <i class="fas fa-gamepad"></i>
+          Explore Games
+        </button>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Games Section -->
+  <section class="games-section" id="games">
+    <h2 class="section-title">Select Your Game</h2>
+    
+    <div class="game-cards">
+      <!-- Game 1 -->
+      <div class="card">
+        <div class="card-icon">
+          <i class="fas fa-shopping-cart"></i>
+        </div>
+        <span class="card-level">Beginner</span>
+        <h3>Grocery Grab</h3>
+        <p>Learn budgeting and needs vs wants through a fun Bingo-style game. Master daily financial decisions while having fun.</p>
+        <button class="card-button" onclick="location.href='frontend/Game1/index.html'">
+          <i class="fas fa-play-circle"></i>
+          Play Game
+        </button>
+      </div>
+      
+      <!-- Game 2 -->
+      <div class="card">
+        <div class="card-icon">
+          <i class="fas fa-ghost"></i>
+        </div>
+        <span class="card-level">Intermediate</span>
+        <h3>Haunted Escape Room</h3>
+        <p>Test your knowledge of taxes, insurance, and decision-making under pressure. Escape financial pitfalls!</p>
+        <button class="card-button" onclick="location.href='frontend/Game2/index.html'">
+          <i class="fas fa-play-circle"></i>
+          Play Game
+        </button>
+      </div>
+      
+      <!-- Game 3 -->
+      <div class="card">
+        <div class="card-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <span class="card-level">Expert</span>
+        <h3>Recession Run</h3>
+        <p>Navigate your way through investing, EMIs, and economic downturns like a pro. Survive the financial storm!</p>
+        <button class="card-button" onclick="location.href='frontend/Game3/index.html'">
+          <i class="fas fa-play-circle"></i>
+          Play Game
+        </button>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Features Section -->
+  <section class="features-section">
+    <h2 class="section-title">Why Choose FinGen?</h2>
+    
+    <div class="features-grid">
+      <div class="feature">
+        <div class="feature-icon">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+        <h3>Learn by Doing</h3>
+        <p>Interactive games that teach real financial concepts through hands-on experience.</p>
+      </div>
+      
+      <div class="feature">
+        <div class="feature-icon">
+          <i class="fas fa-chart-pie"></i>
+        </div>
+        <h3>Track Progress</h3>
+        <p>Monitor your financial literacy growth with detailed analytics and progress reports.</p>
+      </div>
+      
+      <div class="feature">
+        <div class="feature-icon">
+          <i class="fas fa-trophy"></i>
+        </div>
+        <h3>Earn Rewards</h3>
+        <p>Unlock achievements, badges, and virtual rewards as you master financial concepts.</p>
+      </div>
+      
+      <div class="feature">
+        <div class="feature-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <h3>Compete & Collaborate</h3>
+        <p>Challenge friends or join forces to tackle financial challenges together.</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">FinGen</div>
+      <p class="footer-tagline">Transforming financial education through gamification</p>
+      
+      <div class="social-links">
+        <a href="#" class="social-link">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" class="social-link">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="#" class="social-link">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="#" class="social-link">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </div>
+      
+      <div class="cta">
+        <button class="cta-button" onclick="location.href='frontend/QuizPage/index.html'">
+          <i class="fas fa-chart-line"></i>
+          Start Your Financial Journey
+        </button>
+      </div>
+      
+      <div class="copyright">
+        Built with 💜 by Team FinGen • HackHers 2025
+      </div>
+    </div>
+  </footer>
+  
+  <script src="main.js"></script>
+</body>
+</html>

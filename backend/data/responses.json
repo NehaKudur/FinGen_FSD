@@ -1,0 +1,14 @@
+{
+    "financially_independent": {
+      "tip": "Diversify your investments.",
+      "scenario": "You received a bonus at work. How would you invest it?"
+    },
+    "financially_dependent": {
+      "tip": "Start tracking daily expenses.",
+      "scenario": "You want to save from your monthly allowance. What’s your plan?"
+    },
+    "casual_user": {
+      "tip": "Use budgeting apps to monitor spending.",
+      "scenario": "You tend to overspend on weekends. What’s a better alternative?"
+    }
+  }
