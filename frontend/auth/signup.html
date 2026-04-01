@@ -212,6 +212,11 @@
       </select>
     </div>
 
+    <div class="form-group" id="adminCodeGroup" style="display:none">
+    <label>ADMIN CODE</label>
+    <input type="password" id="adminCode" placeholder="Enter secret admin code" />
+    </div>
+
     <button class="btn" onclick="handleSignup()">CREATE ACCOUNT</button>
     <p class="error-msg" id="errorMsg"></p>
 
@@ -224,7 +229,7 @@
     import { auth, db } from "../firebase.js";
     import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-
+    const SECRET_ADMIN_CODE = "FINGEN2025";
     // Floating background icons
     const icons = ['💰','📈','💳','🏦','💵','📊','🪙','💹'];
     const bg = document.getElementById('bgElements');
@@ -238,6 +243,14 @@
       el.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
       bg.appendChild(el);
     }
+
+    document.getElementById('role').addEventListener('change', function() {
+        const adminCodeGroup = document.getElementById('adminCodeGroup');
+        if (this.value === 'admin') {
+            adminCodeGroup.style.display = 'block';
+        } else {
+        adminCodeGroup.style.display = 'none';}
+    });
 
     window.handleSignup = async function () {
       const name = document.getElementById('name').value.trim();
@@ -253,6 +266,15 @@
         errorMsg.style.display = 'block';
         return;
       }
+
+      if (role === 'admin') {
+        const adminCode = document.getElementById('adminCode').value;
+        if (adminCode !== SECRET_ADMIN_CODE) {
+            errorMsg.textContent = 'Invalid admin code!';
+            errorMsg.style.display = 'block';
+            return;
+        } 
+    }
 
       try {
         // Create user in Firebase Auth
@@ -271,11 +293,7 @@
         });
 
         // Redirect based on role
-        if (role === 'admin') {
-          window.location.href = "/frontend/auth/admin.html";
-        } else {
-          window.location.href = "/index.html";
-        }
+       window.location.href = "/index.html";
 
       } catch (err) {
         errorMsg.style.display = 'block';

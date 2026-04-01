@@ -260,12 +260,15 @@
 
       <!-- Shown when logged IN -->
       <div class="nav-profile" id="navProfile">
-        <div class="nav-avatar" id="navAvatar">?</div>
+        <div class="nav-avatar" id="navAvatar" onclick="location.href='frontend/auth/profile.html'" style="cursor:pointer" title="View Profile">?</div>
         <div class="nav-info">
           <span class="nav-username" id="navUsername">Loading...</span>
           <span class="nav-level" id="navLevel">Level: --</span>
         </div>
         <button class="nav-btn logout" id="logoutBtn">LOGOUT</button>
+        <button class="nav-btn admin-panel" id="adminBtn" style="display:none; background: linear-gradient(135deg, #ff6600, #ffaa00); color:#fff; border:none;" onclick="location.href='frontend/auth/admin.html'">
+        ADMIN PANEL
+        </button>
       </div>
 
     </div>
@@ -463,6 +466,9 @@
           navAvatar.textContent = data.name.charAt(0).toUpperCase();
           navUsername.textContent = data.name;
           navLevel.textContent = 'Level: ' + data.level;
+          if (data.role === 'admin') {
+            document.getElementById('adminBtn').style.display = 'block';
+          }
         }
       } else {
         // Not logged in — show login/signup buttons
