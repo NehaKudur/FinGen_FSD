@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FinGen – Sign Up</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      background: #000;
+      font-family: 'Press Start 2P', monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      overflow: hidden;
+    }
+
+    /* Floating background elements */
+    .bg-elements {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .floating-icon {
+      position: absolute;
+      font-size: 1.5rem;
+      opacity: 0.15;
+      animation: floatAround linear infinite;
+    }
+
+    @keyframes floatAround {
+      0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.15; }
+      90%  { opacity: 0.15; }
+      100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      background: rgba(0, 10, 30, 0.85);
+      border: 2px solid #00aaff;
+      border-radius: 16px;
+      padding: 40px 36px;
+      width: 100%;
+      max-width: min(460px, 92vw);
+      box-shadow: 0 0 30px rgba(0, 170, 255, 0.3);
+      overflow: hidden;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .logo span {
+      font-size: 1.6rem;
+      background: linear-gradient(90deg, #00aaff, #0044ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .logo p {
+      color: #88ccff;
+      font-size: clamp(0.48rem, 1.4vw, 0.54rem);
+      margin-top: 8px;
+      line-height: 1.8;
+    }
+
+    h2 {
+      color: #00aaff;
+      font-size: clamp(0.8rem, 2vw, 0.88rem);
+      text-align: center;
+      margin-bottom: 28px;
+      letter-spacing: 2px;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      color: #88ccff;
+      font-size: clamp(0.48rem, 1.3vw, 0.54rem);
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+      line-height: 1.5;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      background: rgba(0, 30, 60, 0.8);
+      border: 1px solid #0055aa;
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(0.48rem, 1.3vw, 0.54rem);
+      line-height: 1.55;
+      outline: none;
+      transition: border 0.3s;
+    }
+
+    input:focus, select:focus {
+      border-color: #00aaff;
+      box-shadow: 0 0 8px rgba(0, 170, 255, 0.4);
+    }
+
+    select option {
+      background: #000a1e;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      margin-top: 10px;
+      background: linear-gradient(135deg, #0044ff, #00aaff);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(0.58rem, 1.5vw, 0.64rem);
+      line-height: 1.45;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: all 0.3s;
+      box-shadow: 0 0 15px rgba(0, 170, 255, 0.4);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(0, 170, 255, 0.7);
+    }
+
+    .error-msg {
+      color: #ff4444;
+      font-size: clamp(0.43rem, 1.2vw, 0.5rem);
+      text-align: center;
+      margin-top: 12px;
+      display: none;
+      line-height: 1.8;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+      color: #88ccff;
+      font-size: clamp(0.43rem, 1.2vw, 0.5rem);
+      line-height: 2;
+    }
+
+    .login-link a {
+      color: #00aaff;
+      text-decoration: none;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 28px 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating background -->
+  <div class="bg-elements" id="bgElements"></div>
+
+  <div class="card">
+    <div class="logo">
+      <span>💰 FinGen</span>
+      <p>Your gamified financial literacy platform</p>
+    </div>
+
+    <h2>CREATE ACCOUNT</h2>
+
+    <div class="form-group">
+      <label>FULL NAME</label>
+      <input type="text" id="name" placeholder="Enter your name" />
+    </div>
+
+    <div class="form-group">
+      <label>EMAIL ADDRESS</label>
+      <input type="email" id="email" placeholder="Enter your email" />
+    </div>
+
+    <div class="form-group">
+      <label>PASSWORD</label>
+      <input type="password" id="password" placeholder="Min 6 characters" />
+    </div>
+
+    <div class="form-group">
+      <label>ROLE</label>
+      <select id="role">
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+
+    <button class="btn" onclick="handleSignup()">CREATE ACCOUNT</button>
+    <p class="error-msg" id="errorMsg"></p>
+
+    <div class="login-link">
+      Already have an account? <a href="login.html">Login here</a>
+    </div>
+  </div>
+
+  <script type="module">
+    import { auth, db } from "../firebase.js";
+    import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+    // Floating background icons
+    const icons = ['💰','📈','💳','🏦','💵','📊','🪙','💹'];
+    const bg = document.getElementById('bgElements');
+    for (let i = 0; i < 20; i++) {
+      const el = document.createElement('div');
+      el.className = 'floating-icon';
+      el.textContent = icons[Math.floor(Math.random() * icons.length)];
+      el.style.left = Math.random() * 100 + '%';
+      el.style.animationDuration = (8 + Math.random() * 12) + 's';
+      el.style.animationDelay = (Math.random() * 10) + 's';
+      el.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
+      bg.appendChild(el);
+    }
+
+    window.handleSignup = async function () {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const role = document.getElementById('role').value;
+      const errorMsg = document.getElementById('errorMsg');
+
+      errorMsg.style.display = 'none';
+
+      if (!name || !email || !password) {
+        errorMsg.textContent = 'Please fill in all fields!';
+        errorMsg.style.display = 'block';
+        return;
+      }
+
+      try {
+        // Create user in Firebase Auth
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Save extra info in Firestore
+        await setDoc(doc(db, "users", user.uid), {
+          name: name,
+          email: email,
+          role: role,
+          level: "Beginner",
+          quizScore: 0,
+          gamesPlayed: [],
+          createdAt: new Date().toISOString()
+        });
+
+        // Redirect based on role
+        if (role === 'admin') {
+          window.location.href = "/frontend/auth/admin.html";
+        } else {
+          window.location.href = "/index.html";
+        }
+
+      } catch (err) {
+        errorMsg.style.display = 'block';
+        if (err.code === 'auth/email-already-in-use') {
+          errorMsg.textContent = 'Email already registered! Try logging in.';
+        } else if (err.code === 'auth/weak-password') {
+          errorMsg.textContent = 'Password must be at least 6 characters!';
+        } else {
+          errorMsg.textContent = 'Error: ' + err.message;
+        }
+      }
+    }
+  </script>
+</body>
+</html>

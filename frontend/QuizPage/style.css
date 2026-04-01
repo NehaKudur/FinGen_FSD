@@ -1,21 +1,21 @@
 :root {
-  --primary: #8a2be2;
-  --primary-dark: #5d1a9b;
-  --primary-light: #b57edc;
-  --secondary: #00e5ff;
-  --secondary-dark: #00b8d4;
-  --accent: #ff6b9d;
-  --accent-dark: #e05587;
-  --background: #0a0a1a;
-  --surface: #121230;
-  --surface-light: #1a1a3a;
+  --primary: #0044ff;
+  --primary-dark: #0032c7;
+  --primary-light: #3e74ff;
+  --secondary: #00aaff;
+  --secondary-dark: #0089cc;
+  --accent: #ffd700;
+  --accent-dark: #d9b100;
+  --background: #000010;
+  --surface: #000a1e;
+  --surface-light: #00163a;
   --text: #ffffff;
-  --text-dim: #b0b0d0;
+  --text-dim: #9ec8ff;
   --success: #00ff9d;
   --warning: #ffcc00;
   --danger: #ff4757;
-  --shadow: 0 0 20px rgba(138, 43, 226, 0.3);
-  --glow: 0 0 15px var(--secondary);
+  --shadow: 0 0 22px rgba(0, 100, 255, 0.25);
+  --glow: 0 0 15px rgba(0, 170, 255, 0.6);
   --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -36,8 +36,8 @@ body {
   padding: 20px;
   overflow-x: hidden;
   background-image: 
-    radial-gradient(circle at 10% 20%, rgba(138, 43, 226, 0.15) 0%, transparent 20%),
-    radial-gradient(circle at 90% 80%, rgba(0, 229, 255, 0.1) 0%, transparent 20%);
+    radial-gradient(circle at 10% 20%, rgba(0, 68, 255, 0.16) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba(0, 170, 255, 0.12) 0%, transparent 20%);
 }
 
 .background-animation {
@@ -97,14 +97,14 @@ body {
 }
 
 .logo-text {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Press Start 2P', monospace;
   font-size: 2.5rem;
   font-weight: 900;
   background: linear-gradient(to right, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+  text-shadow: 0 0 10px rgba(0, 170, 255, 0.45);
 }
 
 .subtitle {
@@ -121,7 +121,7 @@ body {
   border-radius: 15px;
   padding: 15px 30px;
   margin: 0 auto 20px;
-  border: 1px solid rgba(138, 43, 226, 0.2);
+  border: 1px solid rgba(0, 100, 255, 0.3);
   max-width: 600px;
 }
 
@@ -141,7 +141,7 @@ body {
 }
 
 .stat-value {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Press Start 2P', monospace;
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--text);
@@ -152,7 +152,7 @@ body {
   border-radius: 20px;
   padding: 30px;
   box-shadow: var(--shadow);
-  border: 1px solid rgba(138, 43, 226, 0.2);
+  border: 1px solid rgba(0, 100, 255, 0.3);
   position: relative;
   overflow: hidden;
 }
@@ -173,7 +173,7 @@ body {
   border-radius: 15px;
   padding: 25px;
   margin-bottom: 20px;
-  border-left: 4px solid var(--primary);
+  border-left: 4px solid var(--secondary);
   animation: fadeIn 0.5s;
 }
 
@@ -198,9 +198,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Press Start 2P', monospace;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 0.7rem;
   flex-shrink: 0;
 }
 
@@ -222,7 +222,7 @@ body {
   align-items: center;
   padding: 16px 20px;
   background: var(--surface);
-  border: 2px solid rgba(138, 43, 226, 0.3);
+  border: 2px solid rgba(0, 100, 255, 0.35);
   border-radius: 12px;
   cursor: pointer;
   transition: var(--transition);
@@ -231,8 +231,8 @@ body {
 
 .option:hover {
   transform: translateY(-2px);
-  border-color: var(--primary);
-  box-shadow: 0 5px 15px rgba(138, 43, 226, 0.2);
+  border-color: var(--secondary);
+  box-shadow: 0 0 16px rgba(0, 170, 255, 0.35);
 }
 
 .option input[type="radio"] {
@@ -253,7 +253,7 @@ body {
 .option-icon {
   width: 40px;
   height: 40px;
-  background: rgba(138, 43, 226, 0.1);
+  background: rgba(0, 68, 255, 0.12);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -281,8 +281,8 @@ body {
   padding: 16px 30px;
   border: none;
   border-radius: 12px;
-  font-family: 'Inter', sans-serif;
-  font-size: 1.1rem;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.56rem;
   font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
@@ -296,12 +296,12 @@ body {
 .btn-primary {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white;
-  box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+  box-shadow: 0 0 16px rgba(0, 170, 255, 0.35);
 }
 
 .btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(138, 43, 226, 0.5);
+  box-shadow: 0 0 24px rgba(0, 170, 255, 0.55);
 }
 
 .btn-secondary {
@@ -311,7 +311,7 @@ body {
 }
 
 .btn-secondary:hover {
-  background: rgba(138, 43, 226, 0.1);
+  background: rgba(0, 68, 255, 0.15);
   transform: translateY(-3px);
 }
 
@@ -332,7 +332,7 @@ body {
   background: var(--surface-light);
   border-radius: 15px;
   padding: 20px;
-  border: 1px solid rgba(138, 43, 226, 0.2);
+  border: 1px solid rgba(0, 100, 255, 0.3);
 }
 
 .progress-label {
@@ -372,7 +372,7 @@ body {
   border-radius: 20px;
   padding: 30px;
   text-align: center;
-  border: 1px solid rgba(0, 229, 255, 0.2);
+  border: 1px solid rgba(0, 100, 255, 0.35);
 }
 
 .result-header {
@@ -387,7 +387,7 @@ body {
 }
 
 .result-title {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Press Start 2P', monospace;
   font-size: 2rem;
   font-weight: 700;
   color: var(--secondary);
@@ -408,7 +408,7 @@ body {
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  box-shadow: 0 10px 30px rgba(0, 229, 255, 0.3);
+  box-shadow: 0 0 24px rgba(0, 170, 255, 0.4);
   animation: scorePop 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -419,7 +419,7 @@ body {
 }
 
 .score-value {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Press Start 2P', monospace;
   font-size: 3.5rem;
   font-weight: 900;
   color: white;
@@ -442,7 +442,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: rgba(138, 43, 226, 0.1);
+  background: rgba(0, 68, 255, 0.12);
   border: 2px solid var(--primary);
   border-radius: 50px;
   padding: 12px 25px;
@@ -455,9 +455,9 @@ body {
 }
 
 .badge-text {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Press Start 2P', monospace;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 0.62rem;
   color: var(--text);
 }
 
@@ -482,9 +482,9 @@ body {
   color: var(--text);
   margin: 25px 0;
   padding: 20px;
-  background: rgba(138, 43, 226, 0.05);
+  background: rgba(0, 68, 255, 0.1);
   border-radius: 15px;
-  border-left: 4px solid var(--primary);
+  border-left: 4px solid var(--secondary);
 }
 
 .action-buttons {
@@ -498,11 +498,11 @@ body {
 .improvement-tips {
   margin-top: 30px;
   padding-top: 25px;
-  border-top: 1px solid rgba(138, 43, 226, 0.2);
+  border-top: 1px solid rgba(0, 100, 255, 0.3);
 }
 
 .improvement-tips h3 {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Press Start 2P', monospace;
   color: var(--secondary);
   margin-bottom: 20px;
   display: flex;
@@ -524,7 +524,7 @@ body {
   align-items: center;
   gap: 15px;
   padding: 15px;
-  background: rgba(138, 43, 226, 0.05);
+  background: rgba(0, 68, 255, 0.1);
   border-radius: 10px;
   border-left: 3px solid var(--accent);
 }

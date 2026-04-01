@@ -4,19 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FINGEN - Finance Bingo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --primary: #8A2BE2;
-      --primary-dark: #6A1CB8;
-      --primary-light: #9D4EDD;
-      --secondary: #00D4FF;
+      --primary: #0044ff;
+      --primary-dark: #0032c7;
+      --primary-light: #3e74ff;
+      --secondary: #00aaff;
       --accent: #FFD700;
-      --background: #0F0F23;
-      --surface: #1A1A2E;
+      --background: #000010;
+      --surface: #000a1e;
       --text: #FFFFFF;
-      --text-secondary: #B0B0D0;
-      --success: #00CC88;
+      --text-secondary: #9ec8ff;
+      --success: #00cc88;
       --warning: #FFAA00;
       --danger: #FF375F;
     }
@@ -25,11 +27,11 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Inter', sans-serif;
     }
     
     body {
-      background: linear-gradient(135deg, var(--background) 0%, #1A1A2E 100%);
+      background: radial-gradient(circle at 15% 20%, rgba(0, 170, 255, 0.15) 0%, transparent 35%), linear-gradient(135deg, var(--background) 0%, #00081a 100%);
       color: var(--text);
       min-height: 100vh;
       display: flex;
@@ -42,12 +44,12 @@
     .game-container {
       width: 100%;
       max-width: 900px;
-      background: rgba(26, 26, 46, 0.8);
+      background: rgba(0, 10, 30, 0.88);
       border-radius: 20px;
       padding: 30px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 30px rgba(0, 100, 255, 0.25);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(138, 43, 226, 0.3);
+      border: 1px solid rgba(0, 100, 255, 0.4);
       position: relative;
       overflow: hidden;
     }
@@ -59,7 +61,7 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle, rgba(138, 43, 226, 0.1) 0%, rgba(26, 26, 46, 0) 70%);
+      background: radial-gradient(circle, rgba(0, 170, 255, 0.1) 0%, rgba(0, 10, 30, 0) 70%);
       z-index: -1;
     }
     
@@ -69,7 +71,7 @@
       align-items: center;
       margin-bottom: 25px;
       padding-bottom: 15px;
-      border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+      border-bottom: 2px solid rgba(0, 100, 255, 0.35);
     }
     
     .logo {
@@ -78,8 +80,9 @@
       gap: 10px;
       font-size: 28px;
       font-weight: 800;
+      font-family: 'Press Start 2P', monospace;
       color: var(--text);
-      text-shadow: 0 0 10px var(--primary);
+      text-shadow: 0 0 10px rgba(0, 170, 255, 0.5);
     }
     
     .logo i {
@@ -96,8 +99,10 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+      box-shadow: 0 0 18px rgba(0, 170, 255, 0.35);
       animation: pulse 2s infinite;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.65rem;
     }
     
     @keyframes pulse {
@@ -120,8 +125,9 @@
       gap: 15px;
       font-size: 2.5rem;
       font-weight: 900;
+      font-family: 'Press Start 2P', monospace;
       color: var(--text);
-      text-shadow: 0 0 10px var(--primary);
+      text-shadow: 0 0 10px rgba(0, 170, 255, 0.5);
       margin-bottom: 10px;
     }
     
@@ -144,7 +150,7 @@
     
     .tile {
       aspect-ratio: 1;
-      background: linear-gradient(135deg, var(--surface) 0%, #252547 100%);
+      background: linear-gradient(135deg, var(--surface) 0%, #00163a 100%);
       border-radius: 12px;
       display: flex;
       justify-content: center;
@@ -166,7 +172,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, rgba(138, 43, 226, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+      background: linear-gradient(135deg, rgba(0, 68, 255, 0.12) 0%, rgba(0, 170, 255, 0.12) 100%);
       opacity: 0;
       transition: opacity 0.3s ease;
     }
@@ -177,8 +183,8 @@
     
     .tile:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-      border-color: var(--primary);
+      box-shadow: 0 0 16px rgba(0, 170, 255, 0.35);
+      border-color: var(--secondary);
     }
     
     .tile.clicked {
@@ -225,15 +231,17 @@
       border-radius: 50px;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+      box-shadow: 0 0 18px rgba(0, 170, 255, 0.35);
       display: flex;
       align-items: center;
       gap: 10px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.62rem;
     }
     
     #draw-ball:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(138, 43, 226, 0.6);
+      box-shadow: 0 0 24px rgba(0, 170, 255, 0.55);
     }
     
     #draw-ball:active {
@@ -251,10 +259,11 @@
       display: flex;
       align-items: center;
       gap: 15px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(0, 24, 58, 0.7);
       padding: 15px 25px;
       border-radius: 50px;
       backdrop-filter: blur(5px);
+      border: 1px solid rgba(0, 100, 255, 0.35);
     }
     
     .drawn-number-label {
@@ -276,8 +285,9 @@
       text-align: center;
       font-size: 20px;
       font-weight: bold;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(0, 24, 58, 0.65);
       backdrop-filter: blur(5px);
+      border: 1px solid rgba(0, 100, 255, 0.35);
     }
     
     .modal {
@@ -286,7 +296,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(15, 15, 35, 0.9);
+      background: rgba(0, 5, 20, 0.92);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -299,13 +309,13 @@
     }
     
     .modal-content {
-      background: linear-gradient(135deg, var(--surface) 0%, #252547 100%);
+      background: linear-gradient(135deg, var(--surface) 0%, #00163a 100%);
       width: 90%;
       max-width: 500px;
       border-radius: 20px;
       padding: 30px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(138, 43, 226, 0.5);
+      border: 1px solid rgba(0, 100, 255, 0.45);
       position: relative;
       animation: modalAppear 0.3s ease;
     }
@@ -328,6 +338,7 @@
       font-size: 22px;
       font-weight: bold;
       color: var(--text);
+      font-family: 'Press Start 2P', monospace;
     }
     
     .close-button {
@@ -355,8 +366,8 @@
     }
     
     .option-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(0, 24, 58, 0.75);
+      border: 1px solid rgba(0, 100, 255, 0.35);
       padding: 15px;
       border-radius: 12px;
       color: var(--text);
@@ -367,8 +378,8 @@
     }
     
     .option-btn:hover {
-      background: rgba(138, 43, 226, 0.2);
-      border-color: var(--primary);
+      background: rgba(0, 68, 255, 0.22);
+      border-color: var(--secondary);
       transform: translateX(5px);
     }
     
@@ -382,6 +393,8 @@
       cursor: pointer;
       transition: background 0.3s;
       float: right;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.5rem;
     }
     
     .close-modal-btn:hover {
@@ -391,10 +404,10 @@
     #ai-feedback-panel {
       margin-top: 30px;
       padding: 25px;
-      background: linear-gradient(135deg, var(--surface) 0%, #252547 100%);
+      background: linear-gradient(135deg, var(--surface) 0%, #00163a 100%);
       border-radius: 20px;
       box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(138, 43, 226, 0.3);
+      border: 1px solid rgba(0, 100, 255, 0.35);
     }
     
     #ai-feedback-panel.hidden {
@@ -410,6 +423,7 @@
     
     .feedback-header h2 {
       font-size: 24px;
+      font-family: 'Press Start 2P', monospace;
       background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
       background-clip: text;
       -webkit-background-clip: text;
@@ -521,12 +535,14 @@
       transition: all 0.3s ease;
       display: block;
       margin: 0 auto;
-      box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+      box-shadow: 0 0 18px rgba(0, 170, 255, 0.35);
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.58rem;
     }
     
     #restart-game:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(138, 43, 226, 0.6);
+      box-shadow: 0 0 24px rgba(0, 170, 255, 0.55);
     }
     
     .particles {
@@ -541,7 +557,7 @@
     
     .particle {
       position: absolute;
-      background: var(--primary);
+      background: var(--secondary);
       border-radius: 50%;
       opacity: 0.3;
       animation: float 15s infinite linear;
@@ -558,8 +574,9 @@
       justify-content: space-between;
       margin-top: 20px;
       padding: 15px;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(0, 24, 58, 0.65);
       border-radius: 12px;
+      border: 1px solid rgba(0, 100, 255, 0.35);
     }
     
     .stat {
@@ -577,6 +594,22 @@
     .stat-label {
       font-size: 14px;
       color: var(--text-secondary);
+    }
+
+    .agent-test-section button {
+      background: linear-gradient(135deg, #0044ff 0%, #00aaff 100%) !important;
+      box-shadow: 0 0 18px rgba(0, 170, 255, 0.35) !important;
+      font-family: 'Press Start 2P', monospace !important;
+      font-size: 0.52rem !important;
+      border: 1px solid rgba(0, 100, 255, 0.4) !important;
+    }
+
+    .agent-test-section button:hover {
+      box-shadow: 0 0 24px rgba(0, 170, 255, 0.55) !important;
+    }
+
+    .agent-test-section button i {
+      margin-right: 10px !important;
     }
     
     @media (max-width: 768px) {
