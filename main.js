@@ -1,9 +1,3 @@
-// ══════════════════════════════════════════════════════
-//  FINGEN — main.js
-//  Synthwave BG · Pixel Arcade Sprites · Ticker · FX
-// ══════════════════════════════════════════════════════
-
-// ── SYNTHWAVE PERSPECTIVE GRID BACKGROUND ──────────────────────────────────
 function initSynthwaveBg() {
   const canvas = document.getElementById('bgCanvas');
   if (!canvas) return;
@@ -16,118 +10,92 @@ function initSynthwaveBg() {
   resize();
   window.addEventListener('resize', resize);
 
-  let offset = 0; // scrolling offset for floor grid
+  let offset = 0;
   let starField = [];
 
-  // Generate stars once
-  for (let i = 0; i < 200; i++) {
+  for (let i = 0; i < 180; i++) {
     starField.push({
       x: Math.random(),
-      y: Math.random() * 0.5, // only upper half (sky)
-      r: Math.random() * 1.5 + 0.3,
-      twinkle: Math.random() * Math.PI * 2
+      y: Math.random() * 0.65,
+      r: Math.random() * 1.8 + 0.3,
+      twinkle: Math.random() * Math.PI * 2,
+      color: ['255,255,255','200,220,255','180,160,255'][Math.floor(Math.random()*3)]
     });
   }
 
   function drawBg() {
     const W = canvas.width;
     const H = canvas.height;
-    const horizon = H * 0.48;
+    const horizon = H * 0.52;
 
-    // ── SKY gradient (deep purple → magenta → dark)
+    // ── SKY — deep purple, matches reference exactly
     const sky = ctx.createLinearGradient(0, 0, 0, horizon);
-    sky.addColorStop(0,   '#0d0015');
-    sky.addColorStop(0.4, '#1a0030');
-    sky.addColorStop(0.75,'#2d0050');
-    sky.addColorStop(1,   '#3d0060');
+    sky.addColorStop(0,    '#0a0018');
+    sky.addColorStop(0.35, '#130030');
+    sky.addColorStop(0.65, '#1e0045');
+    sky.addColorStop(0.85, '#2a005a');
+    sky.addColorStop(1,    '#35006a');
     ctx.fillStyle = sky;
     ctx.fillRect(0, 0, W, horizon);
 
-    // ── Glow horizon line
-    const horizGlow = ctx.createLinearGradient(0, horizon - 40, 0, horizon + 40);
-    horizGlow.addColorStop(0,   'rgba(255,0,204,0)');
-    horizGlow.addColorStop(0.4, 'rgba(255,0,204,0.6)');
-    horizGlow.addColorStop(0.5, 'rgba(0,229,255,0.9)');
-    horizGlow.addColorStop(0.6, 'rgba(255,0,204,0.6)');
-    horizGlow.addColorStop(1,   'rgba(255,0,204,0)');
-    ctx.fillStyle = horizGlow;
-    ctx.fillRect(0, horizon - 40, W, 80);
-
-    // ── Sun / orb behind horizon
-    const sunX = W / 2;
-    const sunY = horizon - 10;
-    const sunR = W * 0.13;
-    const sunGrad = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, sunR);
-    sunGrad.addColorStop(0,   'rgba(255,220,60,0.95)');
-    sunGrad.addColorStop(0.3, 'rgba(255,80,0,0.85)');
-    sunGrad.addColorStop(0.6, 'rgba(200,0,120,0.7)');
-    sunGrad.addColorStop(1,   'rgba(100,0,200,0)');
-    ctx.fillStyle = sunGrad;
-    ctx.beginPath();
-    ctx.arc(sunX, sunY, sunR, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Sun horizontal scan lines
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(sunX, sunY, sunR * 0.95, 0, Math.PI * 2);
-    ctx.clip();
-    for (let sy = sunY - sunR; sy < sunY + sunR; sy += 6) {
-      const alpha = 0.25 + (sy - (sunY - sunR)) / (sunR * 2) * 0.4;
-      ctx.fillStyle = `rgba(0,0,0,${alpha})`;
-      ctx.fillRect(sunX - sunR, sy, sunR * 2, 3);
-    }
-    ctx.restore();
-
-    // ── Stars
-    const t = Date.now() * 0.001;
+    // ── Stars — white dots scattered in sky
     starField.forEach(s => {
-      s.twinkle += 0.02;
-      const alpha = 0.4 + Math.sin(s.twinkle) * 0.4;
-      // color variety: white, cyan, purple, pink
-      const colors = ['255,255,255','0,229,255','180,79,255','255,110,199'];
-      const c = colors[Math.floor(s.x * 100) % 4];
+      s.twinkle += 0.015;
+      const alpha = 0.5 + Math.sin(s.twinkle) * 0.4;
       ctx.beginPath();
       ctx.arc(s.x * W, s.y * horizon, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${c},${alpha})`;
+      ctx.fillStyle = `rgba(${s.color},${alpha})`;
       ctx.fill();
     });
 
-    // ── FLOOR gradient
+    // ── Horizon glow — magenta/pink exactly like reference
+    const horizGlow = ctx.createLinearGradient(0, horizon - 60, 0, horizon + 60);
+    horizGlow.addColorStop(0,    'rgba(180,0,255,0)');
+    horizGlow.addColorStop(0.3,  'rgba(220,0,255,0.35)');
+    horizGlow.addColorStop(0.48, 'rgba(255,0,200,0.75)');
+    horizGlow.addColorStop(0.5,  'rgba(180,100,255,0.9)');
+    horizGlow.addColorStop(0.52, 'rgba(255,0,200,0.75)');
+    horizGlow.addColorStop(0.7,  'rgba(220,0,255,0.35)');
+    horizGlow.addColorStop(1,    'rgba(180,0,255,0)');
+    ctx.fillStyle = horizGlow;
+    ctx.fillRect(0, horizon - 60, W, 120);
+
+    // ── FLOOR — dark teal/purple gradient exactly like reference
     const floor = ctx.createLinearGradient(0, horizon, 0, H);
-    floor.addColorStop(0,   '#1a0035');
-    floor.addColorStop(0.3, '#0d0020');
-    floor.addColorStop(1,   '#050010');
+    floor.addColorStop(0,    '#1a0040');
+    floor.addColorStop(0.15, '#130035');
+    floor.addColorStop(0.4,  '#0a0025');
+    floor.addColorStop(0.7,  '#060015');
+    floor.addColorStop(1,    '#030008');
     ctx.fillStyle = floor;
     ctx.fillRect(0, horizon, W, H - horizon);
 
-    // ── Perspective grid — FLOOR
-    offset = (offset + 0.5) % 100;
-    const VP = { x: W / 2, y: horizon }; // vanishing point
+    // ── GRID ──────────────────────────────────────────
+    offset = (offset + 0.4) % (H / 12);
+    const VP = { x: W / 2, y: horizon };
 
     ctx.save();
     ctx.beginPath();
     ctx.rect(0, horizon, W, H - horizon);
     ctx.clip();
 
-    // Horizontal lines (receding from horizon)
-    const numH = 32;
+    // Horizontal lines — cyan/teal like reference, brighter near bottom
+    const numH = 28;
     for (let i = 1; i <= numH; i++) {
       const prog = i / numH;
-      if (prog < 0.06) continue; // Skip very top (void area)
-      
-      const yFloor = horizon + Math.pow(prog, 1.6) * (H - horizon) + offset * Math.pow(prog, 1.3);
-      if (yFloor > H) continue;
-      
-      const brightness = 0.3 + prog * 0.8;
-      const color = prog < 0.5 
-        ? `rgba(0,255,255,${brightness})`
-        : `rgba(255,30,200,${brightness})`;
-      
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 0.8 + prog * 2;
-      ctx.shadowColor = color;
-      ctx.shadowBlur = 12 + prog * 20;
+      const yFloor = horizon + Math.pow(prog, 1.8) * (H - horizon) + offset * Math.pow(prog, 1.5);
+      if (yFloor > H || yFloor < horizon) continue;
+
+      // Cyan near horizon, shifts to teal/magenta near bottom — exactly like reference
+      const r = Math.floor(0   + prog * 80);
+      const g = Math.floor(200 + prog * 30);
+      const b = Math.floor(255 - prog * 50);
+      const alpha = 0.25 + prog * 0.65;
+
+      ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+      ctx.lineWidth = 0.5 + prog * 1.8;
+      ctx.shadowColor = `rgba(${r},${g},${b},0.6)`;
+      ctx.shadowBlur = 4 + prog * 10;
       ctx.beginPath();
       ctx.moveTo(0, yFloor);
       ctx.lineTo(W, yFloor);
@@ -135,21 +103,23 @@ function initSynthwaveBg() {
     }
     ctx.shadowBlur = 0;
 
-    // Vertical lines (radiating from VP)
-    const numV = 40;
+    // Vertical lines — radiating from VP, cyan/teal like reference
+    const numV = 36;
     for (let i = 0; i <= numV; i++) {
       const t = i / numV;
       const xBot = t * W;
-      
-      const brightness = 0.25 + Math.sin(t * Math.PI) * 0.65;
-      const color = i % 2 === 0
-        ? `rgba(0,240,255,${brightness})`
-        : `rgba(255,30,200,${brightness})`;
-      
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 0.9 + Math.sin(t * Math.PI) * 1.2;
-      ctx.shadowColor = color;
-      ctx.shadowBlur = 10 + Math.sin(t * Math.PI) * 15;
+      const distFromCenter = Math.abs(t - 0.5) * 2;
+
+      // Lines closer to center are brighter cyan, edges more purple
+      const r = Math.floor(distFromCenter * 100);
+      const g = Math.floor(220 - distFromCenter * 80);
+      const b = Math.floor(255);
+      const alpha = 0.15 + (1 - distFromCenter) * 0.55;
+
+      ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+      ctx.lineWidth = 0.6 + (1 - distFromCenter) * 1.2;
+      ctx.shadowColor = `rgba(${r},${g},${b},0.5)`;
+      ctx.shadowBlur = 4 + (1 - distFromCenter) * 12;
       ctx.beginPath();
       ctx.moveTo(VP.x, VP.y);
       ctx.lineTo(xBot, H);
@@ -158,46 +128,51 @@ function initSynthwaveBg() {
     ctx.shadowBlur = 0;
     ctx.restore();
 
-    // ── CEILING grid (mirror of floor, upper portion)
+    // ── CEILING GRID — matches reference top grid exactly
     ctx.save();
     ctx.beginPath();
     ctx.rect(0, 0, W, horizon);
     ctx.clip();
-    ctx.globalAlpha = 0.7;
+    ctx.globalAlpha = 0.75;
 
-    // Ceiling vertical lines
+    // Ceiling vertical lines — same cyan radiating up from VP
     for (let i = 0; i <= numV; i++) {
       const t = i / numV;
       const xTop = t * W;
-      const alpha = 0.15 + Math.sin(t * Math.PI) * 0.35;
-      const color = i % 2 === 0
-        ? `rgba(80,180,255,${alpha})`
-        : `rgba(200,100,255,${alpha})`;
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 0.6 + Math.sin(t * Math.PI) * 0.5;
-      ctx.shadowColor = color;
-      ctx.shadowBlur = 4 + Math.sin(t * Math.PI) * 5;
+      const distFromCenter = Math.abs(t - 0.5) * 2;
+
+      const r = Math.floor(distFromCenter * 80);
+      const g = Math.floor(180 - distFromCenter * 60);
+      const b = Math.floor(255);
+      const alpha = 0.12 + (1 - distFromCenter) * 0.45;
+
+      ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+      ctx.lineWidth = 0.5 + (1 - distFromCenter) * 0.9;
+      ctx.shadowColor = `rgba(${r},${g},${b},0.4)`;
+      ctx.shadowBlur = 3 + (1 - distFromCenter) * 8;
       ctx.beginPath();
       ctx.moveTo(VP.x, VP.y);
       ctx.lineTo(xTop, 0);
       ctx.stroke();
     }
+    ctx.shadowBlur = 0;
 
-    // Ceiling horizontal lines (subtle)
-    const numHC = 12;
+    // Ceiling horizontal lines — fading out near top
+    const numHC = 16;
     for (let i = 1; i <= numHC; i++) {
       const prog = i / numHC;
-      if (prog < 0.1) continue;
-      
-      const yCeil = horizon - Math.pow(prog, 1.6) * horizon;
-      const alpha = 0.08 + prog * 0.15;
-      ctx.strokeStyle = `rgba(150,100,255,${alpha})`;
-      ctx.lineWidth = 0.5;
+      const yCeil = horizon - Math.pow(prog, 1.8) * horizon;
+      if (yCeil < 0) continue;
+
+      const alpha = 0.05 + (1 - prog) * 0.25;
+      ctx.strokeStyle = `rgba(100,150,255,${alpha})`;
+      ctx.lineWidth = 0.4 + (1 - prog) * 0.6;
       ctx.beginPath();
       ctx.moveTo(0, yCeil);
       ctx.lineTo(W, yCeil);
       ctx.stroke();
     }
+
     ctx.globalAlpha = 1;
     ctx.restore();
 
