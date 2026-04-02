@@ -61,6 +61,16 @@
       background-clip: text;
       -webkit-text-fill-color: transparent;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-brand .navbar-logo {
+      height: 50px;
+      max-width: 200px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(0,170,255,0.5));
+      -webkit-text-fill-color: initial;
     }
 
     .nav-back {
@@ -373,7 +383,9 @@
 
   <!-- Navbar -->
   <nav class="navbar">
-    <div class="nav-brand" onclick="location.href='/index.html'">💰 FinGen</div>
+    <div class="nav-brand" onclick="location.href='/index.html'">
+      <img src="../../assets/logo_with_name.png" alt="FinGen" class="navbar-logo">
+    </div>
     <button class="nav-back" onclick="location.href='/index.html'">
       ← BACK TO HOME
     </button>
