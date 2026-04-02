@@ -21,8 +21,16 @@
 
   <!-- ── NAVBAR ── -->
   <nav class="navbar" id="navbar">
-    <div class="nav-brand">
-      <img src="assets/logo_with_name.png" alt="FinGen" class="navbar-logo">
+    <div class="nav-left-group">
+      <div class="nav-brand">
+        <img src="assets/logo_with_name.png" alt="FinGen" class="navbar-logo">
+        <span class="brand-text">FinGen</span>
+      </div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link active">HOME</a>
+        <a href="about.html" class="nav-link">ABOUT</a>
+        <a href="details.html" class="nav-link">DETAILS</a>
+      </div>
     </div>
     <div class="nav-right">
       <div class="nav-auth-buttons" id="navAuthButtons">
@@ -45,11 +53,21 @@
   <header class="hero">
     <div class="hero-bg-effects">
       <div class="hex-grid"></div>
+      <div class="glow-orb orb-blue"></div>
+      <div class="glow-orb orb-yellow"></div>
+      <div class="glow-orb orb-cyan"></div>
     </div>
 
     <div class="hero-content">
-      <!-- Logo image -->
-      <img src="assets/logo.png" alt="FinGen Logo" class="hero-logo">
+      <!-- Main logo (logo.png) above name -->
+      <div class="logo-wrap">
+        <div class="logo-ring ring-1"></div>
+        <div class="logo-ring ring-2"></div>
+        <div class="logo-ring ring-3"></div>
+        <div class="logo-circle">
+          <img src="assets/logo.png" alt="FinGen Logo" class="logo-icon-img" />
+        </div>
+      </div>
 
       <h1 class="hero-title">
         <span class="title-fin">FIN</span><span class="title-gen">GEN</span>
@@ -241,6 +259,15 @@
   </footer>
 
   <script src="main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const links = document.querySelectorAll('.nav-link');
+      const currentPage = location.pathname.split('/').pop() || 'index.html';
+      links.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === currentPage);
+      });
+    });
+  </script>
 
   <!-- Firebase Auth State -->
   <script type="module">

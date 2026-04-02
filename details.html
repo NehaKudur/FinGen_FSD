@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FinGen - Details</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left-group">
+      <div class="nav-brand"><img src="assets/logo_with_name.png" alt="FinGen" class="navbar-logo"><span class="brand-text">FinGen</span></div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">HOME</a>
+        <a href="about.html" class="nav-link">ABOUT</a>
+        <a href="details.html" class="nav-link active">DETAILS</a>
+      </div>
+    </div>
+  </nav>
+  <main style="padding: 120px 20px 40px; color: white; text-align: center;">
+    <h1 style="font-family: var(--pixel); font-size: 2rem; color: var(--blue-light);">Site Details</h1>
+    <p style="margin-top: 18px; max-width: 880px; margin-left: auto; margin-right: auto; font-family: var(--display); font-size: 1rem; color: var(--text-dim); line-height: 1.7;">Detailed history and breakdown of each game module in FinGen. This page is designed to document how each part of the experience operates and evolves.</p>
+    <section style="margin-top: 42px; text-align: left; max-width: 900px; margin-left:auto; margin-right:auto;">
+      <h2 style="font-family: var(--pixel); font-size: 1.1rem; color: var(--pink);"><em>Game 1</em> – Finance Bingo</h2>
+      <p style="color: var(--text);">A bingo game to find financial terms and reinforce vocabulary.</p>
+
+      <h2 style="font-family: var(--pixel); font-size: 1.1rem; color: var(--pink);"><em>Game 2</em> – Money Maze</h2>
+      <p style="color: var(--text);">Navigate decisions through a maze of expenses and savings.</p>
+
+      <h2 style="font-family: var(--pixel); font-size: 1.1rem; color: var(--pink);"><em>Game 4</em> – Mahjong Concepts</h2>
+      <p style="color: var(--text);">Match terms with definitions while protecting your lives and recalling concepts.</p>
+
+      <h2 style="font-family: var(--pixel); font-size: 1.1rem; color: var(--pink);"><em>Quiz</em> – Knowledge check</h2>
+      <p style="color: var(--text);">Test and validate your understanding through question rounds and milestone scoring.</p>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const links = document.querySelectorAll('.nav-link');
+      const currentPage = location.pathname.split('/').pop() || 'index.html';
+      links.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === currentPage);
+      });
+    });
+  </script>
+</body>
+</html>

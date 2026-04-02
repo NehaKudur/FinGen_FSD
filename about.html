@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FinGen - About</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left-group">
+      <div class="nav-brand"><img src="assets/logo_with_name.png" alt="FinGen" class="navbar-logo"><span class="brand-text">FinGen</span></div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">HOME</a>
+        <a href="about.html" class="nav-link active">ABOUT</a>
+        <a href="details.html" class="nav-link">DETAILS</a>
+      </div>
+    </div>
+  </nav>
+  <main style="padding: 120px 20px 40px; color: white; text-align: center;">
+    <h1 style="font-family: var(--pixel); font-size: 2rem; color: var(--yellow);">About FinGen</h1>
+    <p style="margin-top: 18px; max-width: 880px; margin-left: auto; margin-right: auto; font-family: var(--display); font-size: 1rem; color: var(--text-dim); line-height: 1.7;">FinGen is a retro-futuristic financial literacy platform that blends games and practical lessons. Our mission is to make money management fun, accessible, and engaging for everyone.</p>
+    <section style="margin-top: 42px; text-align: left; max-width: 900px; margin-left:auto; margin-right:auto;">
+      <h2 style="font-family: var(--pixel); font-size: 1.2rem; color: var(--cyan);">Vision</h2>
+      <p style="color: var(--text);">For every user to walk away with stronger financial habits through interactive gameplay and applicable knowledge.</p>
+      <h2 style="font-family: var(--pixel); font-size: 1.2rem; color: var(--cyan);">How It Works</h2>
+      <ul style="color: var(--text); font-family: var(--display);">
+        <li>Play games to learn savings, budgeting, debt, investment, and risk management.</li>
+        <li>Track progress through levels, score, and dynamic challenges.</li>
+        <li>Use the quiz to confirm your knowledge and unlock advanced content.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const links = document.querySelectorAll('.nav-link');
+      const currentPage = location.pathname.split('/').pop() || 'index.html';
+      links.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === currentPage);
+      });
+    });
+  </script>
+</body>
+</html>

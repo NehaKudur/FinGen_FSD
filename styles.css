@@ -144,30 +144,23 @@ button { cursor: pointer; }
 .navbar {
   position: fixed; top:0; left:0; right:0; z-index: 1000;
   display: flex; justify-content: space-between; align-items: center;
-  padding: 0 32px;
-  height: 68px;
-  background: rgba(10,0,25,0.93);
+  padding: 0 14px;
+  height: 48px !important;
+  min-height: 48px !important;
+  background: rgba(10,0,25,0.95);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(180,79,255,0.4);
   box-shadow: 0 0 30px rgba(139,0,255,0.2);
 }
 
 .nav-brand {
-  display: flex; align-items: center; gap: 10px;
-  font-family: var(--pixel); font-size: 0.85rem;
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--pixel);
+  font-size: 0.64rem;
   background: linear-gradient(90deg, var(--yellow), var(--blue-light));
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: brandFlicker 4s ease-in-out infinite;
-}
-
-.navbar-logo {
-  height: 50px;
-  max-width: 200px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 8px rgba(0,170,255,0.5));
-  animation: none;
-  -webkit-text-fill-color: initial;
 }
 
 .brand-icon { font-size: 1.2rem; -webkit-text-fill-color: initial; }
@@ -179,15 +172,64 @@ button { cursor: pointer; }
   98%          { opacity:0.5; }
 }
 
+.nav-left-group {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.navbar-logo {
+  height: 30px;
+  object-fit: contain;
+  animation: logoBounce 2.6s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(0, 170, 255, 0.45));
+}
+
+.brand-text {
+  font-family: var(--pixel);
+  font-size: 0.58rem;
+  color: #fff;
+  text-shadow: 0 0 6px rgba(0,170,255,0.7);
+  letter-spacing: 0.6px;
+}
+
 .nav-right { display:flex; align-items:center; gap:14px; }
 
-.nav-auth-buttons { display:flex; gap:10px; }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-link {
+  font-family: var(--pixel);
+  font-size: 0.58rem !important;
+  color: rgba(187, 206, 255, 0.82) !important;
+  text-decoration: none;
+  display: inline-block;
+  padding: 2px 4px !important;
+  transition: color 0.2s ease, text-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--blue-light);
+  text-shadow: 0 0 10px rgba(94, 204, 255, 0.9);
+  transform: translateY(-1px);
+}
+
+.nav-link.active {
+  color: #78d4ff;
+  text-shadow: 0 0 12px rgba(115, 203, 255, 0.95);
+  border-bottom: 2px solid rgba(46, 192, 255, 0.9);
+}
+
+.nav-auth-buttons { display:flex; gap:8px; }
 
 .nav-btn {
-  font-family: var(--pixel); font-size: 0.38rem;
-  padding: 9px 16px; border-radius: 4px;
+  font-family: var(--pixel); font-size: 0.32rem !important;
+  padding: 5px 10px !important; border-radius: 3px !important;
   cursor: pointer; border: none;
-  transition: all 0.2s; letter-spacing: 0.5px;
+  transition: all 0.2s; letter-spacing: 0.45px;
   image-rendering: pixelated;
 }
 
@@ -265,6 +307,20 @@ button { cursor: pointer; }
   100% { background-position: 60px 52px; }
 }
 
+.glow-orb {
+  position:absolute; border-radius:50%;
+  filter: blur(80px); animation: orbFloat 8s ease-in-out infinite;
+}
+.orb-blue  { width:500px;height:500px; background:rgba(139,0,255,0.18); top:-100px; left:-150px; }
+.orb-yellow{ width:400px;height:400px; background:rgba(255,0,204,0.12);  bottom:-100px; right:-100px; animation-delay:3s; }
+.orb-cyan  { width:300px;height:300px; background:rgba(0,255,204,0.1);  top:40%; left:60%; animation-delay:6s; }
+
+@keyframes orbFloat {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%      { transform: translate(30px,-30px) scale(1.05); }
+  66%      { transform: translate(-20px,20px) scale(0.95); }
+}
+
 /* Logo */
 .logo-wrap {
   position:relative; width:180px; height:180px;
@@ -296,19 +352,12 @@ button { cursor: pointer; }
   50%      { box-shadow: 0 0 70px rgba(0,170,255,0.9), inset 0 0 30px rgba(0,229,255,0.3); }
 }
 
-/* Hero Logo Image */
-.hero-logo {
-  max-width: 280px;
-  width: 100%;
+.main-hero-logo {
+  width: 120px;
   height: auto;
-  margin-bottom: 30px;
-  filter: drop-shadow(0 0 20px rgba(0,170,255,0.5)) drop-shadow(0 0 40px rgba(180,79,255,0.3));
-  animation: logoFloat 3s ease-in-out infinite;
-}
-
-@keyframes logoFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
+  margin: 10px auto 16px;
+  display: block;
+  animation: logoPulse 2.5s ease-in-out infinite;
 }
 
 /* Title */
