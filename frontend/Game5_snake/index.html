@@ -1,150 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FinGen – Finance Snake & Ladder</title>
-  <link rel="stylesheet" href="styles.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<title>FinGen - Snake & Ladder</title>
+<link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="nav-brand">💰 FinGen – Finance Snake & Ladder</div>
-    <button class="nav-back" onclick="location.href='/index.html'">← HOME</button>
-  </nav>
+<div class="container">
 
-  <!-- Main Layout -->
-  <div class="game-wrapper">
+<h1 class="title">Financial Snake & Ladder</h1>
+<p class="subtitle">Make smart financial decisions to climb the ladder</p>
 
-    <!-- LEFT: Rules Panel -->
-    <div class="side-panel">
-      <div class="panel-title">📋 RULES</div>
+<div id="board" class="board"></div>
 
-      <div class="rule-item">
-        <div class="rule-icon">🎲</div>
-        <div class="rule-text">Roll the dice to move. Each tile gives you a financial decision that affects your credit score.</div>
-      </div>
+<div class="controls">
 
-      <div class="rule-item">
-        <div class="rule-icon">🪜</div>
-        <div class="rule-text">Land on a LADDER to climb up and get a credit score bonus!</div>
-      </div>
+<button id="rollDice">Roll Dice</button>
 
-      <div class="rule-item">
-        <div class="rule-icon">🐍</div>
-        <div class="rule-text">Land on a SNAKE and face a timed question (10 sec). Answer correctly to stay safe. Fail and slide down!</div>
-      </div>
+<div class="diceResult">Dice: <span id="dice">-</span></div>
+<div class="position">Position: <span id="pos">1</span></div>
+<div class="score">Score: <span id="score">0</span></div>
 
-      <div class="rule-item">
-        <div class="rule-icon">💳</div>
-        <div class="rule-text">Your credit score starts at 650. Keep it above 300 or it's GAME OVER!</div>
-      </div>
+</div>
 
-      <div class="rule-item">
-        <div class="rule-icon">🏆</div>
-        <div class="rule-text">First to reach tile 100 wins! Computer plays after you each turn.</div>
-      </div>
+<div id="scenarioBox" class="scenario hidden">
+<p id="scenarioText"></p>
 
-      <div class="rule-item">
-        <div class="rule-icon">🤖</div>
-        <div class="rule-text">Computer makes random decisions — it's not perfect! Watch the log to see what it does.</div>
-      </div>
-    </div>
+<button class="choice" onclick="choose(1)">Option 1</button>
+<button class="choice" onclick="choose(2)">Option 2</button>
 
-    <!-- CENTER: Game -->
-    <div class="game-center">
+</div>
 
-      <!-- Score bars -->
-      <div class="scores-bar">
-        <div class="score-card" id="playerScoreCard">
-          <div class="score-header">
-            <div class="score-name">🔵 YOU</div>
-            <div class="score-position">Tile: <span id="playerPos">1</span></div>
-          </div>
-          <div class="credit-label">CREDIT SCORE</div>
-          <div class="credit-value" id="playerCreditVal" style="color:#00aaff">650</div>
-          <div class="credit-bar">
-            <div class="credit-fill" id="playerCreditBar" style="width:58%; background: #00aaff;"></div>
-          </div>
-          <div class="score-status" id="playerStatus" style="color:#00aaff">Good</div>
-        </div>
+<div id="summary" class="summary hidden">
 
-        <div class="score-card" id="computerScoreCard">
-          <div class="score-header">
-            <div class="score-name">🔴 COMPUTER</div>
-            <div class="score-position">Tile: <span id="computerPos">1</span></div>
-          </div>
-          <div class="credit-label">CREDIT SCORE</div>
-          <div class="credit-value" id="computerCreditVal" style="color:#ff4444">650</div>
-          <div class="credit-bar">
-            <div class="credit-fill" id="computerCreditBar" style="width:58%; background: #ff4444;"></div>
-          </div>
-          <div class="score-status" id="computerStatus" style="color:#ff4444">Good</div>
-        </div>
-      </div>
+<h2>Game Summary</h2>
+<p id="result"></p>
 
-      <!-- Board -->
-      <div class="board-container">
-        <div class="board" id="board"></div>
+<button id="analyze">AI Financial Analysis</button>
 
-        <!-- Controls -->
-        <div class="controls">
-          <div class="dice-display" id="diceDisplay">🎲</div>
-          <div class="turn-indicator" id="turnIndicator">YOUR TURN</div>
-          <button class="roll-btn" id="rollBtn" onclick="rollDice()">ROLL DICE</button>
-        </div>
-      </div>
+<div id="ai"></div>
 
-    </div>
+</div>
 
-    <!-- RIGHT: Move Log -->
-    <div class="side-panel">
-      <div class="panel-title">📜 MOVE LOG</div>
-      <div class="log-container" id="logContainer">
-        <div class="log-entry system">🎮 Game started! You go first. Good luck!</div>
-      </div>
-    </div>
+</div>
 
-  </div>
-
-  <!-- Decision Modal -->
-  <div class="modal-overlay hidden" id="decisionModal">
-    <div class="modal" id="modalBox">
-      <div class="modal-icon" id="modalIcon">💳</div>
-      <div class="modal-title blue" id="modalTitle">FINANCIAL DECISION</div>
-      <div class="modal-desc" id="modalDesc">Choose wisely!</div>
-      <div class="timer-bar-container hidden" id="timerContainer">
-        <div class="timer-text">⏱ Time left: <span id="timerText">10</span>s</div>
-        <div class="timer-bar">
-          <div class="timer-fill" id="timerFill" style="width:100%"></div>
-        </div>
-      </div>
-      <div class="decision-options" id="decisionOptions"></div>
-      <button class="continue-btn hidden" id="continueBtn">CONTINUE →</button>
-    </div>
-  </div>
-
-  <!-- End Screen -->
-  <div class="end-screen hidden" id="endScreen">
-    <div class="end-card">
-      <div class="end-icon" id="endIcon">🏆</div>
-      <div class="end-title" id="endTitle">YOU WIN!</div>
-      <div class="end-subtitle" id="endSubtitle">Congratulations!</div>
-      <div class="ai-feedback" id="aiFeedback">
-        <div class="ai-feedback-title">🤖 AI FINANCIAL ANALYSIS</div>
-        <div id="aiText">
-          <div class="spinner"></div>
-        </div>
-      </div>
-      <div class="end-btns">
-        <button class="end-btn primary" onclick="location.reload()">PLAY AGAIN</button>
-        <button class="end-btn secondary" onclick="location.href='/index.html'">HOME</button>
-      </div>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>FinGen UNO Finance</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1 class="title">UNO Investment Strategy</h1>
+
+<div id="cardArea" class="cards"></div>
+
+<button id="draw">Draw Card</button>
+
+<div class="stats">
+
+Score: <span id="score">0</span>
+
+</div>
+
+<div id="scenario" class="scenario hidden">
+
+<p id="question"></p>
+
+<button onclick="answer(1)">Option A</button>
+<button onclick="answer(2)">Option B</button>
+
+</div>
+
+<div id="summary" class="summary hidden">
+
+<h2>Investment Summary</h2>
+<p id="result"></p>
+
+<button id="aiBtn">Analyze Strategy</button>
+
+<div id="ai"></div>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

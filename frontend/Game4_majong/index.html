@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FinGen - Financial Mahjong</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+  <div id="mg-root">
+    <div class="mg-inner">
+
+      <div class="mg-title">Financial<br>Mahjong</div>
+      <div class="mg-sub">Peek freely · Select a pair · Lock In to commit</div>
+
+      <div class="mg-stats">
+        <div class="mg-stat">
+          <span class="mg-stat-label">Matches</span>
+          <span class="mg-stat-value" id="mg-matches">0</span>
+        </div>
+        <div class="mg-stat score">
+          <span class="mg-stat-label">Score</span>
+          <span class="mg-stat-value" id="mg-score">0</span>
+        </div>
+        <div class="mg-stat mistakes">
+          <span class="mg-stat-label">Mistakes</span>
+          <span class="mg-stat-value" id="mg-mistakes">0</span>
+        </div>
+      </div>
+
+      <div class="mg-lives-row" id="mg-lives"></div>
+
+      <div class="mg-board" id="mg-board"></div>
+
+      <!-- LOCK IN bar — visible only when 2 tiles are selected -->
+      <div class="mg-lockin-bar hidden" id="mg-lockin-bar">
+        <span class="mg-lockin-hint">Pair selected — commit your answer</span>
+        <button class="mg-btn mg-btn-lockin" id="mg-lockin-btn">🔒 Lock In</button>
+      </div>
+
+      <div class="mg-controls">
+        <button class="mg-btn mg-btn-secondary" id="mg-restart">↺ Restart</button>
+        <button class="mg-btn mg-btn-primary"   id="mg-finish">Finish Game</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WIN / END MODAL OVERLAY -->
+  <div class="mg-overlay hidden" id="mg-overlay">
+    <div class="mg-modal">
+
+      <div class="mg-modal-badge" id="modal-badge">🏆</div>
+      <div class="mg-modal-title" id="modal-title">You Matched<br>Everything!</div>
+
+      <div class="mg-modal-stats">
+        <div class="mg-modal-stat">
+          <span class="ms-label">Matched</span>
+          <span class="ms-val c1" id="mod-matches">0</span>
+        </div>
+        <div class="mg-modal-stat">
+          <span class="ms-label">Score</span>
+          <span class="ms-val c2" id="mod-score">0</span>
+        </div>
+        <div class="mg-modal-stat">
+          <span class="ms-label">Mistakes</span>
+          <span class="ms-val c3" id="mod-mistakes">0</span>
+        </div>
+      </div>
+
+      <!-- AI ANALYSIS BLOCK -->
+      <div class="mg-ai-block">
+        <div class="mg-ai-header">
+          <div class="mg-ai-dot"></div>
+          <span class="mg-ai-label-text">AI · What You Learned</span>
+        </div>
+        <div class="mg-learnt-title">Concepts Covered This Session</div>
+        <div class="mg-learnt-grid" id="mod-chips"></div>
+        <div class="mg-ai-insight" id="mod-insight">Generating your financial insight...</div>
+      </div>
+
+      <div class="mg-modal-btns">
+        <button class="mg-btn mg-btn-secondary" id="mod-close">✕ Close</button>
+        <button class="mg-btn mg-btn-primary"   id="mod-replay">↺ Play Again</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
