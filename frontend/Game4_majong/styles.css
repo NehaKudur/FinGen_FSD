@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&display=swap');
 
 * {
   box-sizing: border-box;
@@ -7,17 +7,19 @@
 }
 
 body {
-  background: #080920;
+  background: #0d0015;
   min-height: 100vh;
+  color: #f0e8ff;
+  font-family: 'Orbitron', sans-serif;
 }
 
 /* ─── ROOT ─── */
 #mg-root {
-  background: #080920;
+  background: #0d0015;
   min-height: 100vh;
   padding: 28px 16px 40px;
-  font-family: 'Press Start 2P', monospace;
-  color: #e2e8f0;
+  font-family: 'Orbitron', sans-serif;
+  color: #f0e8ff;
   position: relative;
   overflow: hidden;
 }
@@ -27,8 +29,8 @@ body {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse 60% 40% at 20% 10%, rgba(124,58,237,0.18) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 35% at 80% 85%, rgba(34,211,238,0.13) 0%, transparent 65%);
+    radial-gradient(ellipse 60% 40% at 20% 10%, rgba(139,0,255,0.2) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 35% at 80% 85%, rgba(0,170,255,0.14) 0%, transparent 65%);
   pointer-events: none;
   z-index: 0;
 }
@@ -52,12 +54,12 @@ body {
 }
 
 .mg-sub {
-  font-size: 5px;
+  font-size: 9px;
   text-align: center;
-  color: #64748b;
+  color: #b39ad9;
   margin-bottom: 22px;
-  letter-spacing: 2px;
-  line-height: 2;
+  letter-spacing: 1px;
+  line-height: 1.7;
 }
 
 /* ─── STATS ─── */

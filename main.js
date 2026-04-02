@@ -56,11 +56,11 @@ function initSynthwaveBg() {
     // Horizon glow
     const horizGlow = ctx.createLinearGradient(0, horizon - 60, 0, horizon + 60);
     horizGlow.addColorStop(0,    'rgba(180,0,255,0)');
-    horizGlow.addColorStop(0.3,  'rgba(220,0,255,0.35)');
-    horizGlow.addColorStop(0.48, 'rgba(255,0,200,0.75)');
-    horizGlow.addColorStop(0.5,  'rgba(180,100,255,0.9)');
+    horizGlow.addColorStop(0.3,  'rgba(220,0,255,0.15)');
+    horizGlow.addColorStop(0.48, 'rgba(255,0,200,0.3)');
+    horizGlow.addColorStop(0.5,  'rgba(180,100,255,0.35)');
     horizGlow.addColorStop(0.52, 'rgba(255,0,200,0.75)');
-    horizGlow.addColorStop(0.7,  'rgba(220,0,255,0.35)');
+    horizGlow.addColorStop(0.7,  'rgba(220,0,255,0.15)');
     horizGlow.addColorStop(1,    'rgba(180,0,255,0)');
     ctx.fillStyle = horizGlow;
     ctx.fillRect(0, horizon - 60, W, 120);

@@ -1,21 +1,21 @@
 :root {
-  --primary: #0044ff;
-  --primary-dark: #0032c7;
-  --primary-light: #3e74ff;
+  --primary: #8b00ff;
+  --primary-dark: #6100b3;
+  --primary-light: #b44fff;
   --secondary: #00aaff;
-  --secondary-dark: #0089cc;
+  --secondary-dark: #008fd6;
   --accent: #ffd700;
-  --accent-dark: #d9b100;
-  --background: #000010;
-  --surface: #000a1e;
-  --surface-light: #00163a;
-  --text: #ffffff;
-  --text-dim: #9ec8ff;
-  --success: #00ff9d;
+  --accent-dark: #cc9900;
+  --background: #0d0015;
+  --surface: rgba(20, 0, 40, 0.88);
+  --surface-light: rgba(35, 0, 70, 0.72);
+  --text: #f0e8ff;
+  --text-dim: #bca1e4;
+  --success: #00ffcc;
   --warning: #ffcc00;
-  --danger: #ff4757;
-  --shadow: 0 0 22px rgba(0, 100, 255, 0.25);
-  --glow: 0 0 15px rgba(0, 170, 255, 0.6);
+  --danger: #ff3399;
+  --shadow: 0 0 22px rgba(180, 79, 255, 0.28);
+  --glow: 0 0 15px rgba(180, 79, 255, 0.6);
   --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -26,7 +26,7 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Orbitron', sans-serif;
   background: var(--background);
   color: var(--text);
   min-height: 100vh;
@@ -36,8 +36,8 @@ body {
   justify-content: center;
   padding: 20px;
   overflow-x: hidden;
-  background-image: 
-    radial-gradient(circle at 10% 20%, rgba(0, 68, 255, 0.16) 0%, transparent 20%),
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(180, 79, 255, 0.18) 0%, transparent 24%),
     radial-gradient(circle at 90% 80%, rgba(0, 170, 255, 0.12) 0%, transparent 20%);
 }
 

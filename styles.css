@@ -327,26 +327,12 @@ button { cursor: pointer; }
   margin:0 auto 30px; display:flex; align-items:center; justify-content:center;
 }
 
-.logo-ring {
-  position:absolute; border-radius:50%; border:2px solid;
-  animation: spin linear infinite;
+.logo-icon-img {
+  width: 280px;
+  height: 280px;
+  object-fit: contain;
+  image-rendering: pixelated;
 }
-.ring-1 { width:180px;height:180px; border-color:rgba(0,170,255,0.5);  animation-duration:10s; border-style: dashed; }
-.ring-2 { width:150px;height:150px; border-color:rgba(255,215,0,0.4);  animation-duration:7s; animation-direction:reverse; }
-.ring-3 { width:120px;height:120px; border-color:rgba(0,229,255,0.3);  animation-duration:5s; }
-
-@keyframes spin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
-
-.logo-circle {
-  width:90px; height:90px; border-radius:8px;
-  background: linear-gradient(135deg, var(--blue-dark), var(--blue), var(--blue-light));
-  display:flex; align-items:center; justify-content:center;
-  box-shadow: 0 0 40px rgba(0,170,255,0.6), inset 0 0 20px rgba(0,229,255,0.2);
-  animation: logoPulse 3s ease-in-out infinite;
-  position:relative; z-index:1;
-}
-.logo-circle i { font-size:40px; color:var(--yellow); text-shadow:var(--glow-yellow); }
-
 @keyframes logoPulse {
   0%,100% { box-shadow: 0 0 40px rgba(0,170,255,0.6), inset 0 0 20px rgba(0,229,255,0.2); }
   50%      { box-shadow: 0 0 70px rgba(0,170,255,0.9), inset 0 0 30px rgba(0,229,255,0.3); }
