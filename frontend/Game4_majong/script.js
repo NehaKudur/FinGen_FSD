@@ -178,16 +178,71 @@ function handleTileClick(tile) {
 
 // ─── LOCK IN ──────────────────────────────────────────────────────────────────
 
+// --- NEW HELPER FOR FEEDBACK ---
+function spawnPopupText(text, refEl) {
+  const popup = document.createElement('div');
+  popup.className = 'mg-popup-text';
+  popup.textContent = text;
+  
+  const rect = refEl.getBoundingClientRect();
+  // Center the text over the clicked tile
+  popup.style.left = (rect.left + rect.width / 2 - 40) + 'px';
+  popup.style.top = rect.top + 'px';
+  
+  document.body.appendChild(popup);
+  popup.addEventListener('animationend', () => popup.remove());
+}
+
+// --- MODIFIED CLICK LOGIC ---
+function handleTileClick(tile) {
+  if (gameOver) return;
+  if (tile.classList.contains('matched')) return;
+
+  // If already selected, clicking again deselects it
+  if (tile.classList.contains('selected')) {
+    tile.classList.remove('selected');
+    tile.classList.add('peeked');
+    selectedTiles = selectedTiles.filter(t => t !== tile);
+    peekedTiles.push(tile);
+    showLockInBar(selectedTiles.length === 2);
+    return;
+  }
+
+  // Flip tile open if face-down
+  if (!tile.classList.contains('peeked')) {
+    tile.classList.add('peeked');
+    tile.querySelector('.tile-inner').textContent = tile.dataset.text;
+    peekedTiles.push(tile);
+  }
+
+  // Handle Selection Limit (Max 2)
+  if (selectedTiles.length === 2) {
+    const bumped = selectedTiles.shift();
+    bumped.classList.remove('selected');
+    bumped.classList.add('peeked');
+    peekedTiles.push(bumped);
+  }
+
+  peekedTiles = peekedTiles.filter(t => t !== tile);
+  tile.classList.remove('peeked');
+  tile.classList.add('selected');
+  selectedTiles.push(tile);
+
+  showLockInBar(selectedTiles.length === 2);
+}
+
+// --- FULLY REWRITTEN LOCK-IN LOGIC ---
 function lockIn() {
   if (selectedTiles.length !== 2) return;
 
   const [tileA, tileB] = selectedTiles;
   const isMatch = tileA.dataset.group === tileB.dataset.group;
+  const board = document.getElementById('mg-board');
 
   showLockInBar(false);
 
   if (isMatch) {
-    // ── Correct ──
+    // 1. Success State
     matches++;
     score += 10;
 
@@ -196,46 +251,49 @@ function lockIn() {
     tileA.classList.add('matched');
     tileB.classList.add('matched');
 
-    // Remove from peeked list if they were there
-    peekedTiles = peekedTiles.filter(t => t !== tileA && t !== tileB);
     selectedTiles = [];
+    peekedTiles = peekedTiles.filter(t => t !== tileA && t !== tileB);
 
     updateStats();
 
     if (matches === PAIRS.length) {
       setTimeout(() => endGame('win'), 500);
     }
-
   } else {
-    // ── Wrong ──
+    // 2. Failure State
     mistakes++;
     score = Math.max(0, score - 5);
     updateStats();
 
-    // Add red flash to all non-matched tiles
-    document.querySelectorAll('.tile').forEach(tile => {
-      if (!tile.classList.contains('matched')) {
-        tile.classList.add('wrong-flash');
-      }
-    });
-
+    // Trigger Animations
+    board.classList.add('shake');
+    spawnPopupText("WRONG!", tileA);
     loseLife(tileA);
 
+    // Flash the specific wrong tiles
+    tileA.classList.add('wrong-flash');
+    tileB.classList.add('wrong-flash');
+
+    // 3. REVERT LOGIC
     setTimeout(() => {
-      // Flip all non-matched tiles back to face-down
-      document.querySelectorAll('.tile').forEach(tile => {
+      // Find ALL tiles that are not "matched" and flip them back
+      document.querySelectorAll('.mg-tile').forEach(tile => {
         if (!tile.classList.contains('matched')) {
           tile.classList.remove('selected', 'peeked', 'wrong-flash');
           tile.querySelector('.tile-inner').textContent = '?';
         }
       });
+
+      // Clear the memory pools (force the user to remember again)
       selectedTiles = [];
       peekedTiles = [];
+      
+      board.classList.remove('shake');
 
       if (lives <= 0) {
         endGame('lose');
       }
-    }, 700);
+    }, 800); // 0.8s delay allows user to see what they got wrong
   }
 }
 
