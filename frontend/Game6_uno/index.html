@@ -1,52 +1,206 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>FinGen UNO Finance</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../styles.css">
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinGen — Portfolio Panic UNO</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-<div class="container">
+    <!-- ===== HEADER ===== -->
+    <header class="game-header">
+        <div class="logo">
+            <span class="logo-icon">💰</span>
+            <span class="logo-text">FinGen — <span class="game-title">Portfolio Panic</span></span>
+        </div>
+        <a href="../../index.html" class="btn-home">← HOME</a>
+    </header>
 
-<h1 class="title">UNO Investment Strategy</h1>
+    <!-- ===== PLAYER STATS BAR ===== -->
+    <div class="stats-bar">
+        <div class="player-stat" id="player-stat">
+            <div class="stat-indicator you-indicator"></div>
+            <div class="stat-name">YOU</div>
+            <div class="stat-info">
+                <span class="stat-label">CARDS</span>
+                <span class="stat-value" id="player-card-count">7</span>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">PORTFOLIO</span>
+                <span class="stat-value" id="player-portfolio">₹1,00,000</span>
+            </div>
+            <div class="uno-badge hidden" id="player-uno">UNO!</div>
+        </div>
 
-<div id="cardArea" class="cards"></div>
+        <div class="market-mood-display">
+            <div class="mood-label">MARKET MOOD</div>
+            <div class="mood-indicator" id="mood-display">
+                <span class="mood-emoji">📈</span>
+                <span class="mood-text" id="mood-text">BULL MARKET</span>
+            </div>
+            <div class="mood-tip" id="mood-tip">High-value assets scoring bonus</div>
+        </div>
 
-<button id="draw">Draw Card</button>
+        <div class="player-stat right-stat" id="computer-stat">
+            <div class="uno-badge hidden" id="computer-uno">UNO!</div>
+            <div class="stat-info">
+                <span class="stat-label">PORTFOLIO</span>
+                <span class="stat-value" id="computer-portfolio">₹1,00,000</span>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">CARDS</span>
+                <span class="stat-value" id="computer-card-count">7</span>
+            </div>
+            <div class="stat-name">COMPUTER</div>
+            <div class="stat-indicator computer-indicator"></div>
+        </div>
+    </div>
 
-<div class="stats">
+    <!-- ===== MAIN GAME CONTAINER ===== -->
+    <div class="game-container">
 
-Score: <span id="score">0</span>
+        <!-- LEFT: Rules Panel -->
+        <div class="panel rules-panel">
+            <div class="panel-header">■ RULES</div>
+            <div class="rules-list">
+                <div class="rule-item">
+                    <span class="rule-icon">🎴</span>
+                    <p>Match the top card by <strong>color (asset)</strong> or <strong>number (risk level)</strong>.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">⏭️</span>
+                    <p><strong>Market Freeze</strong> — Opponent loses their next turn.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">🔄</span>
+                    <p><strong>Reversal</strong> — Market mood flips! Bull → Bear, etc.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">💳</span>
+                    <p><strong>Debt Trap</strong> — Opponent draws 2 liability cards.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">🃏</span>
+                    <p><strong>Diversify (Wild)</strong> — Change the active asset class freely.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">💥</span>
+                    <p><strong>Eco Shock (Wild+4)</strong> — Opponent draws 4 cards &amp; loses turn.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">📥</span>
+                    <p>If you can't play, <strong>draw from the pile</strong>. Then pass if still stuck.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">📣</span>
+                    <p>Hit <strong>CALL UNO!</strong> when you have exactly 1 card left.</p>
+                </div>
+            </div>
+            <div class="asset-legend">
+                <div class="panel-header">■ ASSET CLASSES</div>
+                <div class="legend-item"><span class="legend-color stocks"></span> Stocks (Red)</div>
+                <div class="legend-item"><span class="legend-color bonds"></span> Bonds (Blue)</div>
+                <div class="legend-item"><span class="legend-color crypto"></span> Crypto (Yellow)</div>
+                <div class="legend-item"><span class="legend-color realestate"></span> Real Estate (Green)</div>
+            </div>
+        </div>
 
-</div>
+        <!-- CENTER: Game Board -->
+        <div class="game-board">
 
-<div id="scenario" class="scenario hidden">
+            <!-- Computer Hand -->
+            <div class="computer-area">
+                <div class="area-label">COMPUTER'S PORTFOLIO</div>
+                <div class="computer-hand" id="computer-hand"></div>
+            </div>
 
-<p id="question"></p>
+            <!-- Central Play Area -->
+            <div class="play-area">
+                <div class="pile-area">
+                    <!-- Draw Pile -->
+                    <div class="pile-wrapper">
+                        <div class="pile-label">DRAW PILE</div>
+                        <div class="draw-pile" id="draw-pile" onclick="drawCard()" title="Draw a card">
+                            <div class="card card-back">
+                                <div class="card-back-inner">💼</div>
+                            </div>
+                        </div>
+                        <div class="pile-count" id="draw-count">— cards</div>
+                    </div>
 
-<button onclick="answer(1)">Option A</button>
-<button onclick="answer(2)">Option B</button>
+                    <!-- Active Color -->
+                    <div class="current-color-display">
+                        <div class="color-label">ACTIVE ASSET</div>
+                        <div class="color-indicator" id="color-indicator"></div>
+                        <div class="color-name" id="color-name">—</div>
+                    </div>
 
-</div>
+                    <!-- Discard Pile -->
+                    <div class="pile-wrapper">
+                        <div class="pile-label">DISCARD PILE</div>
+                        <div class="discard-pile" id="discard-pile"></div>
+                    </div>
+                </div>
 
-<div id="summary" class="summary hidden">
+                <div class="turn-indicator" id="turn-indicator">
+                    <span class="turn-arrow">▶️</span> YOUR TURN — SELECT A CARD OR DRAW
+                </div>
+            </div>
 
-<h2>Investment Summary</h2>
-<p id="result"></p>
+            <!-- Player Hand -->
+            <div class="player-area">
+                <div class="area-label">YOUR PORTFOLIO — <span id="hand-hint">Click a glowing card to play it</span></div>
+                <div class="player-hand" id="player-hand"></div>
+                <div class="action-buttons">
+                    <button class="btn-uno" onclick="callUno()">📣 CALL UNO!</button>
+                    <button class="btn-pass" id="pass-btn" onclick="passTurn()" disabled>⏭ PASS TURN</button>
+                </div>
+            </div>
 
-<button id="aiBtn">Analyze Strategy</button>
+        </div>
 
-<div id="ai"></div>
+        <!-- RIGHT: Move Log -->
+        <div class="panel log-panel">
+            <div class="panel-header">■ MARKET LOG</div>
+            <div class="log-entries" id="log-entries">
+                <div class="log-entry system-log">
+                    <span class="log-icon">🎮</span> Game started! Your turn. Good luck!
+                </div>
+            </div>
+        </div>
 
-</div>
+    </div>
 
-</div>
+    <!-- ===== WILD COLOR PICKER MODAL ===== -->
+    <div class="modal-overlay hidden" id="color-modal">
+        <div class="modal-box">
+            <div class="modal-title">🃏 DIVERSIFY YOUR PORTFOLIO</div>
+            <div class="modal-subtitle">Choose the active asset class:</div>
+            <div class="color-picker">
+                <button class="color-btn stocks" onclick="selectWildColor('red')">📈 STOCKS</button>
+                <button class="color-btn bonds"  onclick="selectWildColor('blue')">📊 BONDS</button>
+                <button class="color-btn crypto"  onclick="selectWildColor('yellow')">🪙 CRYPTO</button>
+                <button class="color-btn realestate" onclick="selectWildColor('green')">🏠 REAL ESTATE</button>
+            </div>
+        </div>
+    </div>
 
-<script src="script.js"></script>
+    <!-- ===== GAME OVER MODAL ===== -->
+    <div class="modal-overlay hidden" id="gameover-modal">
+        <div class="modal-box gameover-box">
+            <div class="modal-title" id="gameover-title">GAME OVER</div>
+            <div class="gameover-result" id="gameover-result"></div>
+            <div class="ai-analysis">
+                <div class="ai-header">🤖 AI FINANCIAL ANALYSIS</div>
+                <div class="ai-feedback" id="ai-feedback"></div>
+            </div>
+            <div class="gameover-stats" id="gameover-stats"></div>
+            <button class="btn-restart" onclick="restartGame()">🔄 PLAY AGAIN</button>
+        </div>
+    </div>
 
+    <script src="script.js"></script>
 </body>
 </html>
