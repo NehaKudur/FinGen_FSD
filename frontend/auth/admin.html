@@ -637,10 +637,11 @@
   } else {
     totalUsers++;
   }
-        (d.gamesPlayed || []).forEach(g => {
-          gameCount[g] = (gameCount[g] || 0) + 1;
-        });
-      });
+  (d.gamesPlayed || []).forEach(g => {
+    const id = typeof g === 'object' ? g.gameId : g;
+    gameCount[id] = (gameCount[id] || 0) + 1;
+  });
+});
 
       document.getElementById('totalUsers').textContent = totalUsers;
       document.getElementById('totalAdmins').textContent = totalAdmins;
@@ -696,7 +697,8 @@
         (found.level === 'Intermediate' ? ' intermediate' : found.level === 'Expert' ? ' expert' : '');
 
       const gamesPlayed = found.gamesPlayed || [];
-      document.getElementById('resultGamesCount').textContent = gamesPlayed.length;
+      const uniqueIds = new Set(gamesPlayed.map(g => typeof g === 'object' ? g.gameId : g));
+document.getElementById('resultGamesCount').textContent = uniqueIds.size;
       document.getElementById('resultLevel').textContent = found.level;
 
       if (found.createdAt) {
@@ -707,13 +709,28 @@
 
       // Games tags
       const gamesEl = document.getElementById('resultGamesList');
-      if (gamesPlayed.length > 0) {
-        gamesEl.innerHTML = gamesPlayed.map(g =>
-          `<span class="game-tag">${gameNames[g] || g}</span>`
-        ).join('');
-      } else {
-        gamesEl.innerHTML = '<span class="no-games">No games played yet!</span>';
-      }
+if (gamesPlayed.length > 0) {
+  const seen = new Set();
+  const unique = gamesPlayed.filter(g => {
+    const id = typeof g === 'object' ? g.gameId : g;
+    if (seen.has(id)) return false;
+    seen.add(id);
+    return true;
+  });
+
+  gamesEl.innerHTML = unique.map(g => {
+    const id = typeof g === 'object' ? g.gameId : g;
+    const name = typeof g === 'object' ? g.gameName : gameNames[g] || g;
+    const result = typeof g === 'object' ? g.result : null;
+    const badge = result === 'win' ? '🏆' :
+                  result === 'lose' ? '😢' :
+                  result === 'gameover' ? '💀' :
+                  result === 'complete' ? '✅' : '🎮';
+    return `<span class="game-tag">${badge} ${name}</span>`;
+  }).join('');
+} else {
+  gamesEl.innerHTML = '<span class="no-games">No games played yet!</span>';
+}
 
       document.getElementById('userResult').classList.add('visible');
     }

@@ -567,7 +567,8 @@
     </div>
   </div>
 
-  <script>
+  <script type="module">
+    import { saveGameResult } from "../gameTracker.js";
     const totalTiles = 28;
     let balance = 100000;
     let lap = 1;
@@ -858,6 +859,7 @@
     }
 
     function endGame(message) {
+      saveGameResult('game3', 'Recession Run', balance, balance >= 30000 ? 'win' : balance >= 0 ? 'complete' : 'gameover');
       const rollButton = document.getElementById("roll-button");
       const tileInfo = document.getElementById("tile-info");
       rollButton.disabled = true;

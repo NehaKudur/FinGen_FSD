@@ -137,5 +137,9 @@
   </div>
 
   <script src="script.js"></script>
+  <script type="module">
+    import { saveGameResult } from "../gameTracker.js";
+    window.saveGameResult = saveGameResult;
+  </script>
 </body>
 </html>

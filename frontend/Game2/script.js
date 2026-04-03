@@ -314,6 +314,10 @@ function updateSalaryDisplay() {
 
 // End game
 function endGame() {
+  if (window.saveGameResult) {
+    const score = Math.round((correctAnswers / questions.length) * 100);
+    window.saveGameResult('game2', 'Haunted Escape Room', score, correctAnswers >= 2 ? 'win' : 'lose');
+  }
   document.getElementById("game-screen").classList.add("hidden");
   document.getElementById("end-screen").classList.remove("hidden");
   document.getElementById("final-salary").textContent = `₹${salaryLeft}`;

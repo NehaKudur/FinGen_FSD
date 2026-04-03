@@ -750,7 +750,8 @@
     </div>
   </div>
 
-  <script>
+  <script type="module">
+import { saveGameResult } from "../gameTracker.js";
     // Finance Bingo Game - Prompt Bank
     const promptBank = [
       {
@@ -1299,6 +1300,7 @@
       
       // AI Feedback Functions
       async function saveGameAndGetFeedback() {
+        saveGameResult('game1', 'Grocery Grab', moneySaved, checkBingo() ? 'win' : 'lose');
         showLoading();
         const summary = getGameSummary();
         

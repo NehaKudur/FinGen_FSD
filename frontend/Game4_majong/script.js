@@ -382,6 +382,9 @@ function closeModal() {
 }
 
 function endGame(result) {
+  if (window.saveGameResult) {
+    window.saveGameResult('game4', 'Mahjong Money', score, result === 'win' ? 'win' : result === 'lose' ? 'lose' : 'complete');
+  }
   gameOver = true;
   showLockInBar(false);
   openModal(result);

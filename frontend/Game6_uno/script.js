@@ -1,3 +1,5 @@
+import { saveGameResult } from "../gameTracker.js";
+
 /* ============================================
    FINGEN — PORTFOLIO PANIC UNO
    script.js — Full Game Logic
@@ -452,6 +454,7 @@ function checkWin() {
 }
 
 function endGame(winner) {
+    saveGameResult('game6', 'Portfolio Panic', Math.max(0, 100000 - playerHand.length * 5000), winner === 'player' ? 'win' : 'lose');
     gameActive = false;
     const win = winner === 'player';
 
