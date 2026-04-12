@@ -93,7 +93,12 @@ You should see:
 Serving HTTP on 0.0.0.0 port 8000
 ```
 
-### Terminal 3: Open in Browser
+### OPEN IN BROWSER
+
+BASIC INFO:
+
+http://127.0.0.1:3000 - backend
+http://localhost:8000 - frontend
 
 Navigate to any of these URLs:
 - **Main Site:** http://localhost:8000/
