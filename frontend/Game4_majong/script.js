@@ -55,6 +55,8 @@ let mistakes      = 0;
 let score         = 0;
 let lives         = MAX_LIVES;
 let gameOver      = false;
+const ANALYSIS_API_URL = 'http://127.0.0.1:3000/api/analyze-game';
+const decisionLog = []; 
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 
@@ -246,6 +248,14 @@ function lockIn() {
     matches++;
     score += 10;
 
+    decisionLog.push({
+      pair: [tileA.dataset.text, tileB.dataset.text],
+      result: 'correct',
+      concept: tileA.dataset.group,
+      message: `You matched ${tileA.dataset.text} with ${tileB.dataset.text} correctly.`,
+      timestamp: Date.now()
+    });
+
     tileA.classList.remove('selected');
     tileB.classList.remove('selected');
     tileA.classList.add('matched');
@@ -263,11 +273,13 @@ function lockIn() {
     // 2. Failure State
     mistakes++;
     score = Math.max(0, score - 5);
-    updateStats();
-
-    // Trigger Animations
-    board.classList.add('shake');
-    spawnPopupText("WRONG!", tileA);
+    decisionLog.push({
+      pair: [tileA.dataset.text, tileB.dataset.text],
+      result: 'wrong',
+      concept: `${tileA.dataset.group} / ${tileB.dataset.group}`,
+      message: `You matched ${tileA.dataset.text} with ${tileB.dataset.text} incorrectly.`,
+      timestamp: Date.now()
+    });
     loseLife(tileA);
 
     // Flash the specific wrong tiles
@@ -310,11 +322,64 @@ function buildChips() {
   });
 }
 
-function buildInsight(result) {
-  const pool = INSIGHTS[result] || INSIGHTS.finish;
-  const raw  = pool[Math.floor(Math.random() * pool.length)];
-  const el   = document.getElementById('mod-insight');
-  el.innerHTML = raw.replace(/<hi>(.*?)<\/hi>/g, '<span class="hi">$1</span>');
+async function buildInsight(result) {
+  const el = document.getElementById('mod-insight');
+  el.textContent = 'Generating your financial insight...';
+
+  try {
+    const response = await fetch(ANALYSIS_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        gameId: 'game4',
+        summary: {
+          matches,
+          mistakes,
+          score,
+          result,
+          decisions: decisionLog
+        }
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`API Error ${response.status}`);
+    }
+
+    const data = await response.json();
+    el.innerHTML = renderAIAnalysis(data);
+  } catch (err) {
+    console.error('AI analysis failed:', err);
+    const pool = INSIGHTS[result] || INSIGHTS.finish;
+    const raw = pool[Math.floor(Math.random() * pool.length)];
+    el.innerHTML = raw.replace(/<hi>(.*?)<\/hi>/g, '<span class="hi">$1</span>');
+  }
+}
+
+function renderAIAnalysis(aiData) {
+  if (!aiData || typeof aiData !== 'object') {
+    return 'There was a problem generating your analysis.';
+  }
+
+  let html = '';
+  if (Array.isArray(aiData.insights)) {
+    aiData.insights.forEach(insight => {
+      const cls = insight.type === 'good' ? 'mg-ai-good' : insight.type === 'bad' ? 'mg-ai-bad' : 'mg-ai-neutral';
+      html += `<div class="${cls}">${insight.text}</div>`;
+    });
+  }
+
+  if (aiData.lesson) {
+    html += `<div class="mg-ai-lesson"><strong>${aiData.lesson.title}</strong><br>${aiData.lesson.content}</div>`;
+  }
+
+  if (aiData.summary) {
+    html += `<div class="mg-ai-summary"><strong>Summary:</strong> ${aiData.summary}</div>`;
+  }
+
+  return html || 'No analysis available.';
 }
 
 /*

@@ -144,9 +144,9 @@ button { cursor: pointer; }
 .navbar {
   position: fixed; top:0; left:0; right:0; z-index: 1000;
   display: flex; justify-content: space-between; align-items: center;
-  padding: 0 14px;
-  height: 48px !important;
-  min-height: 48px !important;
+  padding: 0 18px;
+  height: 56px !important;
+  min-height: 56px !important;
   background: rgba(10,0,25,0.95);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(180,79,255,0.4);
@@ -154,9 +154,9 @@ button { cursor: pointer; }
 }
 
 .nav-brand {
-  display: flex; align-items: center; gap: 8px;
+  display: flex; align-items: center; gap: 10px;
   font-family: var(--pixel);
-  font-size: 0.64rem;
+  font-size: 0.74rem;
   background: linear-gradient(90deg, var(--yellow), var(--blue-light));
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -175,39 +175,39 @@ button { cursor: pointer; }
 .nav-left-group {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 20px;
 }
 
 .navbar-logo {
-  height: 30px;
+  height: 36px;
   object-fit: contain;
   animation: logoBounce 2.6s ease-in-out infinite;
-  filter: drop-shadow(0 0 8px rgba(0, 170, 255, 0.45));
+  filter: drop-shadow(0 0 10px rgba(0, 170, 255, 0.45));
 }
 
 .brand-text {
   font-family: var(--pixel);
-  font-size: 0.58rem;
+  font-size: 0.68rem;
   color: #fff;
   text-shadow: 0 0 6px rgba(0,170,255,0.7);
   letter-spacing: 0.6px;
 }
 
-.nav-right { display:flex; align-items:center; gap:14px; }
+.nav-right { display:flex; align-items:center; gap:16px; }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .nav-link {
   font-family: var(--pixel);
-  font-size: 0.58rem !important;
+  font-size: 0.68rem !important;
   color: rgba(187, 206, 255, 0.82) !important;
   text-decoration: none;
   display: inline-block;
-  padding: 2px 4px !important;
+  padding: 4px 6px !important;
   transition: color 0.2s ease, text-shadow 0.2s ease, transform 0.2s ease;
 }
 
@@ -223,11 +223,11 @@ button { cursor: pointer; }
   border-bottom: 2px solid rgba(46, 192, 255, 0.9);
 }
 
-.nav-auth-buttons { display:flex; gap:8px; }
+.nav-auth-buttons { display:flex; gap:10px; }
 
 .nav-btn {
-  font-family: var(--pixel); font-size: 0.32rem !important;
-  padding: 5px 10px !important; border-radius: 3px !important;
+  font-family: var(--pixel); font-size: 0.38rem !important;
+  padding: 6px 12px !important; border-radius: 4px !important;
   cursor: pointer; border: none;
   transition: all 0.2s; letter-spacing: 0.45px;
   image-rendering: pixelated;
@@ -509,6 +509,28 @@ button { cursor: pointer; }
   grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
   gap:28px;
   max-width:1200px; margin:0 auto;
+}
+
+/* ── LEVEL SECTIONS ── */
+.level-section {
+  max-width:1200px;
+  margin:60px auto 20px;
+  text-align:center;
+}
+
+.level-title {
+  font-family:var(--pixel);
+  font-size:1.2rem;
+  color:var(--yellow);
+  margin-bottom:8px;
+  text-shadow:0 0 10px rgba(255,215,0,0.5);
+}
+
+.level-description {
+  font-family:var(--display);
+  font-size:0.9rem;
+  color:var(--text-dim);
+  margin-bottom:20px;
 }
 
 /* ── CARD ── */

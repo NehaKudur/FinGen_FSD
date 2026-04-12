@@ -1,18 +1,3 @@
-// Initialize background animation
-function initBackground() {
-  const bg = document.getElementById('backgroundAnimation');
-  
-  // Add floating coins
-  for (let i = 0; i < 15; i++) {
-    const coin = document.createElement('div');
-    coin.className = 'floating-coin';
-    coin.style.left = `${Math.random() * 100}%`;
-    coin.style.animationDelay = `${Math.random() * 5}s`;
-    coin.style.animationDuration = `${10 + Math.random() * 20}s`;
-    bg.appendChild(coin);
-  }
-}
-
 // Update quiz progress
 function updateQuizProgress() {
   const form = document.getElementById('quiz-form');
@@ -23,6 +8,13 @@ function updateQuizProgress() {
   document.getElementById('answered-count').textContent = `${answeredCount}/10`;
   document.getElementById('quiz-progress-fill').style.width = `${progress}%`;
 }
+
+// Global variables to store quiz results
+let quizScore = 0;
+let quizLevel = '';
+let quizAnswers = [];
+const ANALYSIS_API_URL = 'http://127.0.0.1:3000/api/analyze-game';
+
 
 // Initialize form events
 function initFormEvents() {
@@ -42,11 +34,18 @@ function initFormEvents() {
     // Get form data
     const formData = new FormData(form);
     let score = 0;
+    quizAnswers = [];
     
-    // Calculate score
+    // Calculate score and collect answers
     for (let [key, value] of formData.entries()) {
       score += parseInt(value);
+      quizAnswers.push({
+        question: key,
+        answer: value
+      });
     }
+    
+    quizScore = score;
     
     // Determine level
     let level = "";
@@ -71,6 +70,8 @@ function initFormEvents() {
       icon = "fas fa-brain";
     }
     
+    quizLevel = level;
+    
     // Update result display
     document.getElementById('score-value').textContent = score;
     document.getElementById('level-badge').className = `level-badge ${levelClass}`;
@@ -91,6 +92,9 @@ function initFormEvents() {
     if (score >= 7) {
       addCoinAnimation();
     }
+
+    // Automatically display AI analysis once results are shown
+    showAIAnalysis();
   });
 }
 
@@ -168,9 +172,143 @@ function copyToClipboard(text) {
     });
 }
 
+// Show AI analysis
+async function showAIAnalysis() {
+  const analysisDiv = document.getElementById("ai-analysis");
+  const contentDiv = document.getElementById("ai-content");
+  const loadingDiv = document.getElementById("ai-loading");
+  
+  analysisDiv.classList.remove("hidden");
+  analysisDiv.style.display = 'block';
+  loadingDiv.style.display = 'block';
+  contentDiv.style.display = 'block';
+  contentDiv.innerHTML = "";
+
+  try {
+    const response = await fetch(ANALYSIS_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        gameId: 'quiz',
+        summary: {
+          score: quizScore,
+          level: quizLevel,
+          answers: quizAnswers
+        }
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const html = data.analysis ? data.analysis : renderAIAnalysis(data);
+    contentDiv.innerHTML = html;
+  } catch (error) {
+    console.error("API Error:", error);
+    contentDiv.innerHTML = generateLocalAnalysis();
+  } finally {
+    loadingDiv.style.display = 'none';
+  }
+}
+
+function renderAIAnalysis(aiData) {
+  if (!aiData || typeof aiData !== 'object') {
+    return generateLocalAnalysis();
+  }
+
+  let html = '';
+
+  if (Array.isArray(aiData.insights)) {
+    aiData.insights.forEach(insight => {
+      const type = insight.type || 'tip';
+      const sectionClass = type === 'good' ? 'ai-good' : type === 'bad' ? 'ai-bad' : 'ai-tip';
+      html += `
+        <div class="ai-section ${sectionClass}">
+          <div class="ai-section-title"><i class="fas fa-robot"></i> ${insight.type ? insight.type.toUpperCase() : 'Insight'}</div>
+          ${insight.text}
+        </div>
+      `;
+    });
+  }
+
+  if (aiData.lesson) {
+    html += `
+      <div class="ai-section ai-tip">
+        <div class="ai-section-title"><i class="fas fa-lightbulb"></i> ${aiData.lesson.title}</div>
+        ${aiData.lesson.content}
+      </div>
+    `;
+  }
+
+  if (aiData.summary) {
+    html += `
+      <div class="ai-section ai-good">
+        <div class="ai-section-title"><i class="fas fa-check-circle"></i> Summary</div>
+        ${aiData.summary}
+      </div>
+    `;
+  }
+
+  return html || generateLocalAnalysis();
+}
+
+// Generate local analysis (fallback)
+function generateLocalAnalysis() {
+  let analysis = '';
+  
+  if (quizScore <= 4) {
+    analysis = `
+      <div class="ai-section ai-tip">
+        <div class="ai-section-title"><i class="fas fa-seedling"></i> Your Beginner Level Analysis</div>
+        You scored ${quizScore}/10, placing you at the Beginner level. This means you're just starting your financial journey, which is completely normal! Focus on building basic knowledge about budgeting, saving, and understanding different financial products.
+      </div>
+      <div class="ai-section ai-tip">
+        <div class="ai-section-title"><i class="fas fa-lightbulb"></i> Recommended Next Steps</div>
+        1. Learn about compound interest and emergency funds<br>
+        2. Start tracking your monthly expenses<br>
+        3. Understand the difference between needs vs wants<br>
+        4. Read beginner-friendly financial books
+      </div>
+    `;
+  } else if (quizScore <= 7) {
+    analysis = `
+      <div class="ai-section ai-good">
+        <div class="ai-section-title"><i class="fas fa-cogs"></i> Your Intermediate Level Analysis</div>
+        Congratulations on scoring ${quizScore}/10! You have solid foundational knowledge and are ready to dive deeper into advanced financial concepts. You understand most basic principles but could benefit from learning about investments and tax planning.
+      </div>
+      <div class="ai-section ai-tip">
+        <div class="ai-section-title"><i class="fas fa-lightbulb"></i> Recommended Next Steps</div>
+        1. Learn about different investment options (stocks, mutual funds, bonds)<br>
+        2. Understand tax-saving instruments and deductions<br>
+        3. Study risk management and insurance<br>
+        4. Practice creating investment portfolios
+      </div>
+    `;
+  } else {
+    analysis = `
+      <div class="ai-section ai-good">
+        <div class="ai-section-title"><i class="fas fa-brain"></i> Your Expert Level Analysis</div>
+        Excellent work! Scoring ${quizScore}/10 demonstrates expert-level financial knowledge. You have a comprehensive understanding of financial concepts and are well-equipped to make informed financial decisions.
+      </div>
+      <div class="ai-section ai-tip">
+        <div class="ai-section-title"><i class="fas fa-lightbulb"></i> Recommended Next Steps</div>
+        1. Consider advanced topics like derivatives and forex<br>
+        2. Learn about financial modeling and analysis<br>
+        3. Explore entrepreneurship and business finance<br>
+        4. Mentor others in financial literacy
+      </div>
+    `;
+  }
+  
+  return analysis;
+}
+
 // Initialize everything when page loads
 window.addEventListener('load', function() {
-  initBackground();
   initFormEvents();
   updateQuizProgress();
 });

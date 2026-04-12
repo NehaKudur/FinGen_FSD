@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="background-animation" id="backgroundAnimation"></div>
   
   <div class="game-container">
     <div class="header">
@@ -395,6 +394,22 @@
               <div class="tip"><i class="fas fa-book"></i> Read financial blogs daily</div>
               <div class="tip"><i class="fas fa-podcast"></i> Listen to money podcasts</div>
               <div class="tip"><i class="fas fa-chart-line"></i> Track your expenses for 30 days</div>
+            </div>
+          </div>
+          
+          <div class="ai-analysis-section">
+            <div class="ai-note">AI analysis will appear below automatically after quiz submission.</div>
+            <div id="ai-analysis" class="ai-feedback-container hidden">
+              <div class="ai-header">
+                <div class="ai-icon"><i class="fas fa-robot"></i></div>
+                <h3 class="ai-title">AI Financial Mentor Analysis</h3>
+              </div>
+              
+              <div id="ai-loading" class="ai-loading">
+                <i class="fas fa-cog fa-spin"></i> Analyzing your quiz performance...
+              </div>
+              
+              <div id="ai-content" class="ai-content"></div>
             </div>
           </div>
         </div>

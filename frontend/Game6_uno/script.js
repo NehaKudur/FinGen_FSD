@@ -35,6 +35,8 @@ let gameActive    = false;
 
 // Stats for AI feedback
 let stats = {};
+const ANALYSIS_API_URL = 'http://127.0.0.1:3000/api/analyze-game';
+const decisionLog = [];
 
 function resetStats() {
     stats = {
@@ -47,6 +49,7 @@ function resetStats() {
         moodFlips:     0,
         turns:         0,
     };
+    decisionLog.length = 0;
 }
 
 // ===== DECK BUILDER =====
@@ -172,6 +175,16 @@ function playCard(card, handIndex, isPlayer) {
            icon,
            `${isPlayer ? 'You' : 'Computer'} played ${label}`);
 
+    if (isPlayer) {
+        decisionLog.push({
+            decision: label,
+            category: card.type,
+            color: card.color,
+            risk: ['wildDraw4','draw2','reverse','skip'].includes(card.type) ? 'high' : 'normal',
+            timestamp: Date.now()
+        });
+    }
+
     // Wild cards: pause and ask player for colour (or AI picks)
     if (card.type === 'wild' || card.type === 'wildDraw4') {
         if (isPlayer) {
@@ -275,6 +288,12 @@ function drawCard() {
     hasDrawnThisTurn = true;
 
     addLog('player', '📥', 'You drew a card from the market.');
+    decisionLog.push({
+        decision: 'Drew a card',
+        category: 'draw',
+        canPlay: canPlay(card),
+        timestamp: Date.now()
+    });
 
     if (canPlay(card)) {
         addLog('system', '💡', 'The drawn card can be played — click it!');
@@ -293,6 +312,11 @@ function passTurn() {
     hasDrawnThisTurn = false;
     document.getElementById('pass-btn').disabled = true;
     addLog('system', '⏭', 'You passed your turn.');
+    decisionLog.push({
+        decision: 'Passed turn',
+        category: 'pass',
+        timestamp: Date.now()
+    });
     currentTurn = 'computer';
     renderAll();
     setTimeout(computerTurn, 1400);
@@ -463,7 +487,7 @@ function endGame(winner) {
     resultEl.textContent  = win ? 'YOU WIN!' : 'COMPUTER WINS';
     resultEl.className    = `gameover-result ${win ? 'win' : 'lose'}`;
 
-    document.getElementById('ai-feedback').textContent   = generateFeedback(win);
+    document.getElementById('ai-feedback').textContent   = 'Analyzing your portfolio choices...';
     document.getElementById('gameover-stats').innerHTML  = `
         <div>🃏 Wilds Played: ${stats.playerWilds}</div>
         <div>⚡ Actions Used: ${stats.playerActions}</div>
@@ -472,6 +496,67 @@ function endGame(winner) {
     `;
 
     document.getElementById('gameover-modal').classList.remove('hidden');
+    showAIAnalysis(win);
+}
+
+async function showAIAnalysis(playerWon) {
+    const feedbackEl = document.getElementById('ai-feedback');
+    feedbackEl.textContent = 'Analyzing your portfolio decisions...';
+
+    try {
+        const response = await fetch(ANALYSIS_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                gameId: 'game6',
+                summary: {
+                    result: playerWon ? 'win' : 'lose',
+                    finalPortfolioValue: Math.max(0, 100000 - playerHand.length * 5000),
+                    wildsPlayed: stats.playerWilds,
+                    actionsUsed: stats.playerActions,
+                    cardsDrawn: stats.playerDraws,
+                    moodFlips: stats.moodFlips,
+                    decisions: decisionLog
+                }
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`API Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        feedbackEl.innerHTML = renderAIAnalysis(data);
+    } catch (err) {
+        console.error('AI analysis failed:', err);
+        feedbackEl.textContent = generateFeedback(playerWon);
+    }
+}
+
+function renderAIAnalysis(aiData) {
+    if (!aiData || typeof aiData !== 'object') {
+        return 'No AI analysis available.';
+    }
+
+    let html = '';
+    if (Array.isArray(aiData.insights)) {
+        aiData.insights.forEach(insight => {
+            const cls = insight.type === 'good' ? 'ai-good' : insight.type === 'bad' ? 'ai-bad' : 'ai-feedback-title';
+            html += `<div class="${cls}">${insight.text}</div>`;
+        });
+    }
+
+    if (aiData.lesson) {
+        html += `<div class="ai-feedback-lesson"><strong>${aiData.lesson.title}</strong><br>${aiData.lesson.content}</div>`;
+    }
+
+    if (aiData.summary) {
+        html += `<div class="ai-feedback-summary"><strong>Summary:</strong> ${aiData.summary}</div>`;
+    }
+
+    return html || 'No AI analysis available.';
 }
 
 function generateFeedback(playerWon) {

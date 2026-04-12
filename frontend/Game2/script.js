@@ -7,10 +7,8 @@ let timePerQ = 60;
 let timeLeft = timePerQ;
 let gameSummary = [];
 let correctAnswers = 0;
+const ANALYSIS_API_URL = 'http://127.0.0.1:3000/api/analyze-game';
 
-// WARNING: Never expose API keys in client-side code in production!
-// This key should be removed or moved to a backend proxy
-const AI_API_KEY = "YOUR_API_KEY_HERE"; // Replace with your actual API key
 
 const questions = [
   {
@@ -331,6 +329,9 @@ function endGame() {
   } else {
     finalSalaryElem.style.color = "var(--danger)";
   }
+
+  // Automatically show analysis when game ends
+  showAIFeedback();
 }
 
 // Show AI feedback
@@ -344,12 +345,29 @@ async function showAIFeedback() {
   loadingDiv.classList.remove("hidden");
 
   try {
-    // Try to get AI analysis (commented out for safety - uncomment if you have a backend)
-    // const response = await callClaudeAPI();
-    // contentDiv.innerHTML = formatAIResponse(response);
-    
-    // For now, use local analysis
-    contentDiv.innerHTML = generateLocalAnalysis();
+    const response = await fetch(ANALYSIS_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        gameId: 'game2',
+        summary: {
+          finalSalary: salaryLeft,
+          startingSalary: salaryStart,
+          correctAnswers: correctAnswers,
+          totalQuestions: questions.length,
+          gameSummary: gameSummary
+        }
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    contentDiv.innerHTML = renderAIAnalysis(data);
   } catch (error) {
     console.error("API Error:", error);
     contentDiv.innerHTML = generateLocalAnalysis();
@@ -358,65 +376,7 @@ async function showAIFeedback() {
   }
 }
 
-// Call Claude API (commented out for safety)
-async function callClaudeAPI() {
-  const prompt = `Analyze these financial decisions from a tax planning game:
-  
-  Final Salary: ₹${salaryLeft}/₹${salaryStart}
-  Decisions:
-  ${gameSummary.map((q, i) => `
-  ${i+1}. ${q.question}
-     Chose: ${q.selected} ${q.correct ? 'Correct' : 'Wrong'}
-     Impact: ₹${q.cost} ${q.skipped ? '(Skipped)' : ''}
-  `).join('')}
 
-  Provide professional feedback in this format:
-  <good>What they did well</good>
-  <bad>Key mistakes made</bad>
-  <tip>3 actionable tax planning tips</tip>`;
-
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": AI_API_KEY,
-      "anthropic-version": "2023-06-01"
-    },
-    body: JSON.stringify({
-      model: "claude-3-haiku-20240307",
-      max_tokens: 400,
-      messages: [{ role: "user", content: prompt }]
-    })
-  });
-
-  if (!response.ok) throw new Error(`API Error: ${response.status}`);
-  const data = await response.json();
-  return data.content[0].text;
-}
-
-// Format AI response
-function formatAIResponse(text) {
-  return text
-    .replace(/<good>(.*?)<\/good>/gs, `
-      <div class="ai-section ai-good">
-        <div class="ai-section-title"><i class="fas fa-thumbs-up"></i> What You Did Well</div>
-        $1
-      </div>
-    `)
-    .replace(/<bad>(.*?)<\/bad>/gs, `
-      <div class="ai-section ai-bad">
-        <div class="ai-section-title"><i class="fas fa-exclamation-triangle"></i> Areas for Improvement</div>
-        $1
-      </div>
-    `)
-    .replace(/<tip>(.*?)<\/tip>/gs, `
-      <div class="ai-section ai-tip">
-        <div class="ai-section-title"><i class="fas fa-lightbulb"></i> Actionable Financial Tips</div>
-        $1
-      </div>
-    `)
-    .replace(/\n/g, '<br>');
-}
 
 // Generate local analysis (fallback)
 function generateLocalAnalysis() {
@@ -457,6 +417,47 @@ function generateLocalAnalysis() {
   `;
   
   return analysis;
+}
+
+function renderAIAnalysis(aiData) {
+  if (!aiData || typeof aiData !== 'object') {
+    return generateLocalAnalysis();
+  }
+
+  let html = '';
+
+  if (Array.isArray(aiData.insights)) {
+    aiData.insights.forEach(insight => {
+      const type = insight.type || 'tip';
+      const sectionClass = type === 'good' ? 'ai-good' : type === 'bad' ? 'ai-bad' : 'ai-tip';
+      html += `
+        <div class="ai-section ${sectionClass}">
+          <div class="ai-section-title"><i class="fas fa-robot"></i> ${insight.type ? insight.type.toUpperCase() : 'Insight'}</div>
+          ${insight.text}
+        </div>
+      `;
+    });
+  }
+
+  if (aiData.lesson) {
+    html += `
+      <div class="ai-section ai-tip">
+        <div class="ai-section-title"><i class="fas fa-lightbulb"></i> ${aiData.lesson.title}</div>
+        ${aiData.lesson.content}
+      </div>
+    `;
+  }
+
+  if (aiData.summary) {
+    html += `
+      <div class="ai-section ai-good">
+        <div class="ai-section-title"><i class="fas fa-check-circle"></i> Summary</div>
+        ${aiData.summary}
+      </div>
+    `;
+  }
+
+  return html || generateLocalAnalysis();
 }
 
 // Initialize background on load

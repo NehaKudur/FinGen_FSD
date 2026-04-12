@@ -8,6 +8,8 @@ const LADDERS = {
 };
 
 const DICE_FACES = ['⚀','⚁','⚂','⚃','⚄','⚅'];
+const ANALYSIS_API_URL = 'http://127.0.0.1:3000/api/analyze-game';
+let decisionLog = [];
 
 // ─── FINANCIAL DECISIONS ───────────────────────────────────────────────
 const DECISIONS = [
@@ -187,7 +189,6 @@ let computerCredit = 650;
 let isPlayerTurn = true;
 let gameActive = true;
 let timerInterval = null;
-let decisionLog = [];
 let currentCallback = null;
 
 // ─── INIT BOARD ────────────────────────────────────────────────────────
@@ -695,40 +696,63 @@ function endGame(result) {
 
 // ─── AI ANALYSIS ──────────────────────────────────────────────────────
 async function getAIAnalysis(result) {
-  const goodDecisions = decisionLog.filter(d => d.correct).length;
-  const badDecisions = decisionLog.filter(d => !d.correct).length;
-
-  const prompt = `You are a financial literacy coach analyzing a student's performance in a credit score simulation game called Finance Snake & Ladder.
-
-Game Result: ${result === 'win' ? 'Player WON' : result === 'lose' ? 'Computer won' : 'GAME OVER - credit score too low'}
-Final Credit Score: ${playerCredit}/900
-Good Financial Decisions Made: ${goodDecisions}
-Bad Financial Decisions Made: ${badDecisions}
-Total Decisions: ${decisionLog.length}
-
-Key decisions made:
-${decisionLog.slice(0, 5).map(d => `- "${d.decision}" → ${d.correct ? 'GOOD choice' : 'BAD choice'} (${d.effect > 0 ? '+' : ''}${d.effect} credit)`).join('\n')}
-
-Give a SHORT, encouraging 3-4 sentence personalized analysis of their credit score management. Mention what they did well and what to improve. Use simple language suitable for a financial literacy game. End with one practical tip for improving their credit score.`;
+  document.getElementById('aiText').textContent = 'Analyzing your credit decisions...';
 
   try {
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch(ANALYSIS_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        messages: [{ role: "user", content: prompt }]
+        gameId: 'game5',
+        summary: {
+          result,
+          finalCreditScore: playerCredit,
+          goodDecisions: decisionLog.filter(d => d.correct).length,
+          badDecisions: decisionLog.filter(d => !d.correct).length,
+          totalDecisions: decisionLog.length,
+          decisions: decisionLog
+        }
       })
     });
 
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.status}`);
+    }
+
     const data = await response.json();
-    const text = data.content[0].text;
-    document.getElementById('aiText').textContent = text;
+    document.getElementById('aiText').innerHTML = renderAIAnalysis(data);
   } catch (err) {
+    console.error('AI analysis failed:', err);
     document.getElementById('aiText').textContent =
       "Great effort! Focus on paying bills on time and keeping your credit utilization low to build a strong credit score. Every good financial decision today builds a better tomorrow!";
   }
+}
+
+function renderAIAnalysis(aiData) {
+  if (!aiData || typeof aiData !== 'object') {
+    return 'No analysis available.';
+  }
+
+  let html = '';
+
+  if (Array.isArray(aiData.insights)) {
+    aiData.insights.forEach(insight => {
+      const cls = insight.type === 'good' ? 'ai-good' : insight.type === 'bad' ? 'ai-bad' : 'ai-feedback-title';
+      html += `<div class="${cls}">${insight.text}</div>`;
+    });
+  }
+
+  if (aiData.lesson) {
+    html += `<div class="ai-feedback-lesson"><strong>${aiData.lesson.title}</strong><br>${aiData.lesson.content}</div>`;
+  }
+
+  if (aiData.summary) {
+    html += `<div class="ai-feedback-summary"><strong>Summary:</strong> ${aiData.summary}</div>`;
+  }
+
+  return html || 'No analysis available.';
 }
 
 // ─── START ────────────────────────────────────────────────────────────
