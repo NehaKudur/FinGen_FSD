@@ -7,8 +7,8 @@ FinGen is a financial literacy education platform with interactive games and AI-
 - **Node.js** v14+ ([Download](https://nodejs.org/))
 - **Python** 3.x ([Download](https://python.org/))
 - **Git** ([Download](https://git-scm.com/))
-- **Groq API Key** ([Get one here](https://console.groq.com/))
-- **Firebase Project** ([Create one here](https://console.firebase.google.com/))
+- **Groq API Key** SENT CREDS
+- **Firebase Project** SENT CREDS
 
 ## Quick Start
 
@@ -27,19 +27,9 @@ npm install
 cd ..
 ```
 
-### Step 3: Create `.env` File (Backend Configuration)
+### Step 3: Create `.env` File (Backend Configuration) 
 
-Create a new file `backend/.env` with your Groq API key:
-
-```bash
-# On Windows (PowerShell):
-echo "GROQ_API_KEY=your-groq-api-key-here" > backend/.env
-
-# On Mac/Linux:
-echo "GROQ_API_KEY=your-groq-api-key-here" > backend/.env
-```
-
-**Or manually create the file:**
+**Manually create the file:**
 1. Open `backend/` folder
 2. Create a new file named `.env`
 3. Paste this content:
@@ -47,25 +37,15 @@ echo "GROQ_API_KEY=your-groq-api-key-here" > backend/.env
 GROQ_API_KEY=gsk_xxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-**To get your Groq API Key:**
-- Go to [Groq Console](https://console.groq.com/)
-- Sign up / Log in
-- Navigate to **Keys** section
-- Copy your API key
-- Paste it in the `.env` file
-
 ### Step 4: Create `firebase.js` File (Frontend Configuration)
 
 Create a new file `frontend/firebase.js`:
 
-1. Go to [Firebase Console](https://console.firebase.google.com/)
-2. Click **"Create a project"** or select an existing one
-3. Click **"Add app"** → Select **Web (</>)**
-4. Copy the Firebase config object
-5. Create `frontend/firebase.js` with this template:
+CREDENTIALS SENT 
+
 
 ```javascript
-// firebase.js
+// firebase.EXAMPLE.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
@@ -86,13 +66,6 @@ export const db = getFirestore(app);
 
 **Replace the values with your Firebase project details.**
 
-### Step 5: Enable Firebase Services
-
-In your Firebase Console:
-1. Go to **Authentication** → Enable **Email/Password** provider
-2. Go to **Firestore Database** → Create database in **test mode**
-
-## Running the Application
 
 ### Terminal 1: Start Backend Server (Port 3000)
 
